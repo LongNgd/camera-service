@@ -1,0 +1,24 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /camera
+
+spring:
+  application:
+    name: camera-service
+  datasource:
+    hikari:
+      pool-name: CameraServicePool
+      maximum-pool-size: 50 # connections = (core_count * 2) + effective_spindle_count
+      minimum-idle: 10
+      idle-timeout: 60000
+      max-lifetime: 1200000
+      connection-timeout: 5000
+      leak-detection-threshold: 20000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
