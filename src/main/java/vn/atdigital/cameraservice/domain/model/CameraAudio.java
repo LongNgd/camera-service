@@ -22,7 +22,7 @@ public class CameraAudio {
     @Column(name = "camera_id")
     private Long cameraId;
 
-    @Column(name = "audioIn_type_code")
+    @Column(name = "\"audioIn_type_code\"")
     private String audioInTypeCode;
 
     @Column(name = "noise_filter_code")
