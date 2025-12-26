@@ -28,11 +28,11 @@ public class CameraAudio {
     @Column(name = "noise_filter_code")
     private String noiseFilterCode;
 
-    @Column(name = "microphone_volumn")
-    private Integer microphoneVolumn;
+    @Column(name = "microphone_volume")
+    private Integer microphoneVolume;
 
-    @Column(name = "speaker_volumn")
-    private Integer speakerVolumn;
+    @Column(name = "speaker_volume")
+    private Integer speakerVolume;
 
     @Column(name = "created_user")
     private String createdUser;
@@ -46,5 +46,5 @@ public class CameraAudio {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }

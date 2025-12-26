@@ -22,9 +22,6 @@ public class User {
     @Column(name = "group_id")
     private Long groupId;
 
-    @Column(name = "camera_id")
-    private Long cameraId;
-
     private String name;
 
     private String username;
@@ -45,5 +42,5 @@ public class User {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }

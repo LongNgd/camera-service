@@ -2,8 +2,8 @@ package vn.atdigital.cameraservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import vn.atdigital.cameraservice.domain.model.CameraVideoStreamMain;
+import vn.atdigital.cameraservice.domain.model.UserCamera;
 
 @Repository
-public interface CameraVideoStreamMainRepository extends JpaRepository<CameraVideoStreamMain, Long> {
+public interface UserCameraRepository extends JpaRepository<UserCamera, Long> {
 }

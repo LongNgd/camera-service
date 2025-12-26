@@ -40,5 +40,5 @@ public class CameraConditionFfc {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }

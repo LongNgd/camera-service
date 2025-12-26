@@ -22,8 +22,8 @@ public class CameraAudioStream {
     @Column(name = "camera_audio_id")
     private Long cameraAudioId;
 
-    @Column(name = "stream_type_code")
-    private String streamTypeCode;
+    @Column(name = "type_code")
+    private String typeCode;
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
@@ -46,5 +46,5 @@ public class CameraAudioStream {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }
