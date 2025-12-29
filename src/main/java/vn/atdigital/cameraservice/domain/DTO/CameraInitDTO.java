@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CameraInitDTO {
+    private ConnectionDTO connection;
     private CameraCoreDTO cameraCore;
     private TcpIpDTO tcpIp;
     private PortDTO port;

@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import openjoe.smart.sso.client.util.ClientContextHolder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import vn.atdigital.cameraservice.common.utils.CommonUtils;
 import vn.atdigital.cameraservice.domain.DTO.*;
 import vn.atdigital.cameraservice.domain.model.*;
+import vn.atdigital.cameraservice.feignclient.PeerClient;
 import vn.atdigital.cameraservice.helper.CameraHelper;
 import vn.atdigital.cameraservice.repository.*;
 import vn.atdigital.cameraservice.service.CameraService;
@@ -20,6 +23,7 @@ import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.*;
 import static vn.atdigital.cameraservice.common.Constants.PK_TYPE.CAMERA_TYPE;
 import static vn.atdigital.cameraservice.common.Constants.TABLE_NAME.*;
 import static vn.atdigital.cameraservice.common.Constants.TABLE_STATUS.ACTIVE;
+import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +45,8 @@ public class CameraServiceImpl implements CameraService {
     private final CameraConditionImageRepository cameraConditionImageRepository;
     private final CameraConditionAgcRepository cameraConditionAgcRepository;
     private final CameraConditionFfcRepository cameraConditionFfcRepository;
+    private final PeerClient peerClient;
+    private final CameraPathRepository cameraPathRepository;
 
     @Override
     @Transactional
@@ -51,9 +57,9 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_TABLE, cameraId, null, camera);
 
         addCameraToUser(cameraId, auditId);
-
-        createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
-        createPort(cameraId, cameraInitDTO.getPort(), auditId);
+        addCameraPath(cameraId, cameraInitDTO.getConnection(), auditId);
+        if(cameraInitDTO.getTcpIp() != null) createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
+        if(cameraInitDTO.getPort() != null) createPort(cameraId, cameraInitDTO.getPort(), auditId);
         if (cameraInitDTO.getCondition() != null) createCondition(cameraId, cameraInitDTO.getCondition(), auditId);
         if (cameraInitDTO.getVideoStreamList() != null) createVideoStreamList(cameraId, cameraInitDTO.getVideoStreamList(), auditId);
         if (cameraInitDTO.getAudio() != null) createAudio(cameraId, cameraInitDTO.getAudio(), auditId);
@@ -86,6 +92,27 @@ public class CameraServiceImpl implements CameraService {
         userCameraRepository.save(userCamera);
 
         commonUtils.saveActionDetail(auditId, USER_CAMERA_TABLE, userCamera.getId(), null, userCamera);
+    }
+
+    private void addCameraPath(Long cameraId, ConnectionDTO connection, Long auditId) {
+        ResponseEntity<List<PathConfigDTO>> response = peerClient.addPath(List.of(connection));
+
+        Assert.isTrue(response.getStatusCode().is2xxSuccessful(), getMessage("0001.feign-client.error", response.getBody()));
+        Assert.isTrue(response.getBody() != null, getMessage("0001.feign-client.error", response.getBody()));
+
+        PathConfigDTO pathConfig = response.getBody().getFirst();
+
+        CameraPath cameraPath = CameraPath.builder()
+                .cameraId(cameraId)
+                .name(pathConfig.getName())
+                .path(pathConfig.getSource())
+                .createdUser(ClientContextHolder.getUser().getUsername())
+                .createdDatetime(LocalDateTime.now())
+                .status(ACTIVE)
+                .build();
+        cameraPath = cameraPathRepository.save(cameraPath);
+
+        commonUtils.saveActionDetail(auditId, CAMERA_PATH_TABLE, cameraPath.getId(), null, cameraPath);
     }
 
     private void createTcpIp(Long cameraId, TcpIpDTO tcpIp, Long auditId) {

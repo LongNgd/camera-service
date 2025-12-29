@@ -35,3 +35,9 @@ smart:
     logout-callback-path: /auth/sso/logout-callback
     exclude-urls: /auth/*, /actuator/*
     h5-enabled: true
+
+feign-client:
+  peer-service:
+    name: peer-service
+    url: http://xxx.xxx.xxx.xxx:xxx
+    path: /peer

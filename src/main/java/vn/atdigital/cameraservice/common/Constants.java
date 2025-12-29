@@ -58,6 +58,7 @@ public interface Constants {
         public static final String CAMERA_CONDITION_IMAGE_TABLE = "camera_condition_image";
         public static final String CAMERA_CONDITION_AGC_TABLE = "camera_condition_agc";
         public static final String CAMERA_CONDITION_FFC_TABLE = "camera_condition_ffc";
+        public static final String CAMERA_PATH_TABLE = "camera_path";
     }
 }
 
