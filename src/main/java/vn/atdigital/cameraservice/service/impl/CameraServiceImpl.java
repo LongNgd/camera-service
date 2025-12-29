@@ -51,6 +51,7 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_TABLE, cameraId, null, camera);
 
         addCameraToUser(cameraId, auditId);
+
         createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
         createPort(cameraId, cameraInitDTO.getPort(), auditId);
         if (cameraInitDTO.getCondition() != null) createCondition(cameraId, cameraInitDTO.getCondition(), auditId);

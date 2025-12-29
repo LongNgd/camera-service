@@ -15,7 +15,6 @@ import vn.atdigital.cameraservice.repository.LookupValueRepository;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import static vn.atdigital.cameraservice.common.Constants.TABLE_STATUS.ACTIVE;
 import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
 @Component
@@ -60,11 +59,11 @@ public class CommonUtils {
     }
 
     public void checkCodeExistAllowNull(String code) {
-        if (code != null) Assert.isTrue(lookupValueRepository.existsByCodeAndStatus(code, ACTIVE), getMessage("0001.lookup-value.null-or-empty", code));
+        if (code != null) Assert.isTrue(lookupValueRepository.existsByCodeAndIsActive(code, true), getMessage("0001.lookup-value.null-or-empty", code));
     }
 
     public void checkCodeExist(String code) {
-        Assert.isTrue(lookupValueRepository.existsByCodeAndStatus(code, ACTIVE), getMessage("0001.lookup-value.null-or-empty", code));
+        Assert.isTrue(lookupValueRepository.existsByCodeAndIsActive(code, true), getMessage("0001.lookup-value.null-or-empty", code));
     }
 
     public static void checkCodeExistAllowNull(String code, Map<String, String> lookupValueMap) {

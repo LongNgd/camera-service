@@ -35,7 +35,7 @@ public interface Constants {
     }
 
     final class ACTION_CODE {
-        public static final String INIT_CAMERA = "Initialize camera";
+        public static final String INIT_CAMERA = "INIT_CAMERA";
     }
 
     final class PK_TYPE {

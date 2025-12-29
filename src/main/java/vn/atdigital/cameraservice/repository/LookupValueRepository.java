@@ -9,9 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface LookupValueRepository extends JpaRepository<LookupValue, Long> {
-   boolean existsByCodeAndStatus(String code, Long active);
+    List<LookupValue> findByIsActive(Boolean isActive);
 
-   Optional<LookupValue> findByCodeAndStatus(String typeCode, Long active);
-
-    List<LookupValue> findByStatus(Long active);
+    boolean existsByCodeAndIsActive(String code, Boolean isActive);
 }

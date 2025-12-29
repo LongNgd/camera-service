@@ -14,7 +14,6 @@ import java.util.Map;
 
 import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.*;
 import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.VIDEO_STREAM_SUB_CODE;
-import static vn.atdigital.cameraservice.common.Constants.TABLE_STATUS.ACTIVE;
 import static vn.atdigital.cameraservice.common.utils.CommonUtils.*;
 import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
@@ -166,7 +165,7 @@ public class CameraHelper {
     private Map<String, String> getLookUpValueMap() {
         Map<String, String> lookupValueMap = new HashMap<>();
 
-        List<LookupValue> lookUpValueList = lookupValueRepository.findByStatus(ACTIVE);
+        List<LookupValue> lookUpValueList = lookupValueRepository.findByIsActive(true);
         lookUpValueList.forEach(lookupValue -> lookupValueMap.put(lookupValue.getCode(), lookupValue.getName()));
 
         return lookupValueMap;
