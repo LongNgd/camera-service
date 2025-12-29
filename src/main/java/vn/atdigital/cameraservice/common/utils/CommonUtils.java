@@ -24,8 +24,7 @@ public class CommonUtils {
     private final ActionAuditRepository actionAuditRepository;
     private final ActionDetailRepository actionDetailRepository;
     private final LookupValueRepository lookupValueRepository;
-
-    public static ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     public Long saveActionAudit(String userName, String actionCode, Long pkId, String pkType) {
         ActionAudit audit = ActionAudit.builder()
@@ -60,13 +59,28 @@ public class CommonUtils {
         actionDetailRepository.save(detail);
     }
 
+    public void checkCodeExistAllowNull(String code) {
+        if (code != null) Assert.isTrue(lookupValueRepository.existsByCodeAndStatus(code, ACTIVE), getMessage("0001.lookup-value.null-or-empty", code));
+    }
+
     public void checkCodeExist(String code) {
         Assert.isTrue(lookupValueRepository.existsByCodeAndStatus(code, ACTIVE), getMessage("0001.lookup-value.null-or-empty", code));
     }
 
-    public static void checkCodeExists(String code, Map<String, String> lookupValueMap) {
+    public static void checkCodeExistAllowNull(String code, Map<String, String> lookupValueMap) {
         String typeValue = lookupValueMap.get(code);
         if (typeValue == null) throw new EntityNotFoundException(getMessage("0001.lookup-value.null-or-empty", code));
+    }
+
+    public static void validateIpV4AllowNull(String ip) {
+        if (ip != null) {
+            // Regex IPv4 chuẩn: 0–255 cho mỗi octet
+            String ipv4Regex =
+                    "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}"
+                            + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
+
+            Assert.isTrue(ip.matches(ipv4Regex), getMessage("0001.tcpip.ipv4.wrong-format", ip));
+        }
     }
 
     public static void validateIpV4(String ip) {
@@ -76,6 +90,23 @@ public class CommonUtils {
                         + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
 
         Assert.isTrue(ip.matches(ipv4Regex), getMessage("0001.tcpip.ipv4.wrong-format", ip));
+    }
+
+    public static void validateIpV6AllowNull(String ip) {
+        if (ip != null) {
+            String ipv6Regex =
+                    "^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}"
+                            + "|(([0-9a-fA-F]{1,4}:){1,7}:)"
+                            + "|(([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4})"
+                            + "|(([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2})"
+                            + "|(([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3})"
+                            + "|(([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4})"
+                            + "|(([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5})"
+                            + "|([0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6}))"
+                            + "|(:((:[0-9a-fA-F]{1,4}){1,7}|:)))$";
+
+            Assert.isTrue(ip.matches(ipv6Regex), getMessage("0004.tcpip.ipv6.wrong-format", ip));
+        }
     }
 
     public static void validateIpV6(String ip) {
@@ -93,19 +124,30 @@ public class CommonUtils {
         Assert.isTrue(ip.matches(ipv6Regex), getMessage("0004.tcpip.ipv6.wrong-format", ip));
     }
 
-    public static void validateCidrNotation(String cidrNotation) {
-        int cidrNotationInt = Integer.parseInt(cidrNotation);
-        Assert.isTrue(cidrNotationInt >= 0 && cidrNotationInt <= 128,
-                getMessage("0005.tcpip.cidr.wrong-format", cidrNotationInt)
-        );
+    public static void validateCidrNotationAllowNull(String cidrNotation) {
+        if (cidrNotation != null) {
+            int cidrNotationInt = Integer.parseInt(cidrNotation);
+            Assert.isTrue(cidrNotationInt >= 0 && cidrNotationInt <= 128,
+                    getMessage("0005.tcpip.cidr.wrong-format", cidrNotationInt)
+            );
+        }
     }
 
-    public static void validateMacAddress(String mac) {
-        // Regex MAC address chuẩn (XX:XX:XX:XX:XX:XX hoặc XX-XX-XX-XX-XX-XX)
-        String macRegex =
-                "^([0-9A-Fa-f]{2}([:-])){5}([0-9A-Fa-f]{2})$";
+    public static void validateMacAddressAllowNull(String mac) {
+        if (mac != null) {
+            // Regex MAC address chuẩn (XX:XX:XX:XX:XX:XX hoặc XX-XX-XX-XX-XX-XX)
+            String macRegex =
+                    "^([0-9A-Fa-f]{2}([:-])){5}([0-9A-Fa-f]{2})$";
 
-        Assert.isTrue(mac.matches(macRegex), getMessage("0003.tcpip.mac-address.wrong-format", mac));
+            Assert.isTrue(mac.matches(macRegex), getMessage("0003.tcpip.mac-address.wrong-format", mac));
+        }
+    }
+
+    public static void validateInRangeAllowNull(Integer value, Integer min, Integer max) {
+        if (value != null) {
+            if (max == null) Assert.isTrue(value >= min, getMessage("0001.common.number.not-in-range", value));
+            else Assert.isTrue(value >= min && value <= max, getMessage("0001.common.number.not-in-range", value));
+        }
     }
 
     public static void validateInRange(Integer value, Integer min, Integer max) {

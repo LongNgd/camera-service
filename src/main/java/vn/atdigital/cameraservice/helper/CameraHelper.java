@@ -26,76 +26,74 @@ public class CameraHelper {
 
     public void validateCameraCore(CameraCoreDTO cameraCore) {
         Assert.notNull(cameraCore, getMessage("0001.camera.null-or-empty"));
-        Assert.notNull(cameraCore.getOwnerId(), getMessage("0002.camera.owner-id.null-or-empty"));
-        Assert.notNull(cameraCore.getOwnerType(), getMessage("0003.camera.owner-type.null-or-empty"));
         Assert.notNull(cameraCore.getUsername(), getMessage("0004.camera.username.null-or-empty"));
         Assert.notNull(cameraCore.getPassword(), getMessage("0005.camera.password.null-or-empty"));
 
-        commonUtils.checkCodeExist(cameraCore.getLanguageCode());
-        commonUtils.checkCodeExist(cameraCore.getVideoStandardCode());
+        commonUtils.checkCodeExistAllowNull(cameraCore.getLanguageCode());
+        commonUtils.checkCodeExistAllowNull(cameraCore.getVideoStandardCode());
     }
 
     public void validateTcpIp(TcpIpDTO tcpIp) {
-        commonUtils.checkCodeExist(tcpIp.getEthernetCardCode());
-        commonUtils.checkCodeExist(tcpIp.getModeCode());
-        validateMacAddress(tcpIp.getMacAddress());
+        commonUtils.checkCodeExistAllowNull(tcpIp.getEthernetCardCode());
+        commonUtils.checkCodeExistAllowNull(tcpIp.getModeCode());
+        validateMacAddressAllowNull(tcpIp.getMacAddress());
         commonUtils.checkCodeExist(tcpIp.getIpVersionCode());
 
         switch(tcpIp.getIpVersionCode()) {
             case IP_VERSION_IPV4_CODE -> {
                 validateIpV4(tcpIp.getIpAddress());
-                validateIpV4(tcpIp.getSubnetMask());
-                validateIpV4(tcpIp.getDefaultGateway());
-                validateIpV4(tcpIp.getPreferredDns());
-                validateIpV4(tcpIp.getAlternateDns());
+                validateIpV4AllowNull(tcpIp.getSubnetMask());
+                validateIpV4AllowNull(tcpIp.getDefaultGateway());
+                validateIpV4AllowNull(tcpIp.getPreferredDns());
+                validateIpV4AllowNull(tcpIp.getAlternateDns());
             }
             case IP_VERSION_IPV6_CODE -> {
-                validateIpV6(tcpIp.getLinkAddress().split("/")[0]);
-                validateCidrNotation(tcpIp.getLinkAddress().split("/")[1]);
+                validateIpV6AllowNull(tcpIp.getLinkAddress().split("/")[0]);
+                validateCidrNotationAllowNull(tcpIp.getLinkAddress().split("/")[1]);
                 validateIpV6(tcpIp.getIpAddress());
-                validateCidrNotation(tcpIp.getCidrNotation());
-                validateIpV6(tcpIp.getDefaultGateway());
-                validateIpV6(tcpIp.getPreferredDns());
-                validateIpV6(tcpIp.getAlternateDns());
+                validateCidrNotationAllowNull(tcpIp.getCidrNotation());
+                validateIpV6AllowNull(tcpIp.getDefaultGateway());
+                validateIpV6AllowNull(tcpIp.getPreferredDns());
+                validateIpV6AllowNull(tcpIp.getAlternateDns());
             }
         }
     }
 
     public void validatePort(PortDTO port) {
-        validateInRange(port.getMaxConnection(), 1, 20);
+        validateInRangeAllowNull(port.getMaxConnection(), 1, 20);
         validateInRange(port.getTcpPort(), 1025, 65534);
-        validateInRange(port.getUdpPort(), 1025, 65534);
-        validateInRange(port.getHttpPort(), 0, null);
+        validateInRangeAllowNull(port.getUdpPort(), 1025, 65534);
+        validateInRangeAllowNull(port.getHttpPort(), 0, null);
         validateInRange(port.getRtspPort(), 0, null);
-        validateInRange(port.getHttpsPort(), 0, null);
+        validateInRangeAllowNull(port.getHttpsPort(), 0, null);
     }
 
     public void validateCondition(ConditionDTO condition) {
         Map<String, String> lookupValueMap = getLookUpValueMap();
 
-        checkCodeExists(condition.getProfileCode(), lookupValueMap);
-        checkCodeExists(condition.getColorizationCode(), lookupValueMap);
+        checkCodeExistAllowNull(condition.getProfileCode(), lookupValueMap);
+        checkCodeExistAllowNull(condition.getColorizationCode(), lookupValueMap);
 
-        validateInRange(condition.getBrightness(), 0, 100);
-        validateInRange(condition.getContrast(), 0, 100);
-        validateInRange(condition.getSharpness(), 0, 120);
-        validateInRange(condition.getDetailEnhancement(), 0, 128);
-        validateInRange(condition.getHistogramEqualization(), 0, 32);
-        validateInRange(condition.getEZoom(), 0, 19);
-        checkCodeExists(condition.getRoiTypeCode(), lookupValueMap);
-        checkCodeExists(condition.getMirrorCode(), lookupValueMap);
-        checkCodeExists(condition.getFlipCode(), lookupValueMap);
+        validateInRangeAllowNull(condition.getBrightness(), 0, 100);
+        validateInRangeAllowNull(condition.getContrast(), 0, 100);
+        validateInRangeAllowNull(condition.getSharpness(), 0, 120);
+        validateInRangeAllowNull(condition.getDetailEnhancement(), 0, 128);
+        validateInRangeAllowNull(condition.getHistogramEqualization(), 0, 32);
+        validateInRangeAllowNull(condition.getEZoom(), 0, 19);
+        checkCodeExistAllowNull(condition.getRoiTypeCode(), lookupValueMap);
+        checkCodeExistAllowNull(condition.getMirrorCode(), lookupValueMap);
+        checkCodeExistAllowNull(condition.getFlipCode(), lookupValueMap);
 
-        validateInRange(condition.getBasicNr(), 0, 100);
-        validateInRange(condition.getFrontModule(), 0, 100);
-        validateInRange(condition.getRearChip(), 0, 100);
+        validateInRangeAllowNull(condition.getBasicNr(), 0, 100);
+        validateInRangeAllowNull(condition.getFrontModule(), 0, 100);
+        validateInRangeAllowNull(condition.getRearChip(), 0, 100);
 
-        validateInRange(condition.getGainMode(), 0, 255);
-        validateInRange(condition.getAgcPlateau(), 0, 255);
-        checkCodeExists(condition.getGainModeCode(), lookupValueMap);
+        validateInRangeAllowNull(condition.getGainMode(), 0, 255);
+        validateInRangeAllowNull(condition.getAgcPlateau(), 0, 255);
+        checkCodeExistAllowNull(condition.getGainModeCode(), lookupValueMap);
 
-        checkCodeExists(condition.getFfcModeCode(), lookupValueMap);
-        validateInRange(condition.getFfcPeriod(), 0, 1200);
+        checkCodeExistAllowNull(condition.getFfcModeCode(), lookupValueMap);
+        validateInRangeAllowNull(condition.getFfcPeriod(), 0, 1200);
     }
 
     public void validateVideoStreamList(List<VideoStreamDTO> videoStreamList) {
@@ -104,40 +102,40 @@ public class CameraHelper {
         checkIfVideoStreamTypeDuplicate(videoStreamList, lookupValueMap);
 
         for (VideoStreamDTO videoStream : videoStreamList) {
-            checkCodeExists(videoStream.getEncodeModeCode(), lookupValueMap);
-            checkCodeExists(videoStream.getResolutionCode(), lookupValueMap);
-            checkCodeExists(videoStream.getFrameRateCode(), lookupValueMap);
-            checkCodeExists(videoStream.getBitRateTypeCode(), lookupValueMap);
-            checkCodeExists(videoStream.getReferenceBitRateCode(), lookupValueMap);
-            checkCodeExists(videoStream.getBitRateCode(), lookupValueMap);
-            checkCodeExists(videoStream.getSvcCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getEncodeModeCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getResolutionCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getFrameRateCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getBitRateTypeCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getReferenceBitRateCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getBitRateCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getSvcCode(), lookupValueMap);
         }
     }
 
     public void validateAudio(AudioDTO audio) {
         Map<String, String> lookupValueMap = getLookUpValueMap();
 
-        checkCodeExists(audio.getAudioInTypeCode(), lookupValueMap);
-        checkCodeExists(audio.getNoiseFilterCode(), lookupValueMap);
-        validateInRange(audio.getMicrophoneVolume(), 0, null);
-        validateInRange(audio.getSpeakerVolume(), 0, null);
+        checkCodeExistAllowNull(audio.getAudioInTypeCode(), lookupValueMap);
+        checkCodeExistAllowNull(audio.getNoiseFilterCode(), lookupValueMap);
+        validateInRangeAllowNull(audio.getMicrophoneVolume(), 0, null);
+        validateInRangeAllowNull(audio.getSpeakerVolume(), 0, null);
 
         checkIfAudioStreamTypeDuplicate(audio.getAudioStreamList(), lookupValueMap);
         audio.getAudioStreamList().forEach(audioStream -> {
-            checkCodeExists(audioStream.getTypeCode(), lookupValueMap);
-            checkCodeExists(audioStream.getEncodeModeCode(), lookupValueMap);
-            checkCodeExists(audioStream.getSamplingFrequencyCode(), lookupValueMap);
+            checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
+            checkCodeExistAllowNull(audioStream.getEncodeModeCode(), lookupValueMap);
+            checkCodeExistAllowNull(audioStream.getSamplingFrequencyCode(), lookupValueMap);
         });
     }
 
     public void validatePtz(PtzSettingsDTO ptzSettings) {
         Map<String, String> lookupValueMap = getLookUpValueMap();
 
-        checkCodeExists(ptzSettings.getProtocolCode(), lookupValueMap);
-        checkCodeExists(ptzSettings.getBaudRateCode(), lookupValueMap);
-        checkCodeExists(ptzSettings.getDataBitCode(), lookupValueMap);
-        checkCodeExists(ptzSettings.getStopBitCode(), lookupValueMap);
-        checkCodeExists(ptzSettings.getParityCode(), lookupValueMap);
+        checkCodeExistAllowNull(ptzSettings.getProtocolCode(), lookupValueMap);
+        checkCodeExistAllowNull(ptzSettings.getBaudRateCode(), lookupValueMap);
+        checkCodeExistAllowNull(ptzSettings.getDataBitCode(), lookupValueMap);
+        checkCodeExistAllowNull(ptzSettings.getStopBitCode(), lookupValueMap);
+        checkCodeExistAllowNull(ptzSettings.getParityCode(), lookupValueMap);
     }
 
     private void checkIfVideoStreamTypeDuplicate(List<VideoStreamDTO> videoStreamList, Map<String, String> lookupValueMap) {
@@ -145,7 +143,7 @@ public class CameraHelper {
         boolean hasSub = false;
 
         for (VideoStreamDTO videoStream : videoStreamList) {
-            checkCodeExists(videoStream.getTypeCode(), lookupValueMap);
+            checkCodeExistAllowNull(videoStream.getTypeCode(), lookupValueMap);
             if (videoStream.getTypeCode().equals(VIDEO_STREAM_MAIN_CODE) && !hasMain) hasMain = true;
             else if (videoStream.getTypeCode().equals(VIDEO_STREAM_SUB_CODE) && !hasSub) hasSub = true;
             else throw new RuntimeException(getMessage("0001.video-stream.type.exists", lookupValueMap.get(videoStream.getTypeCode())));
@@ -157,8 +155,8 @@ public class CameraHelper {
         boolean hasSub = false;
 
         for (AudioStreamDTO audioStream : audioStreamList) {
-            checkCodeExists(audioStream.getTypeCode(), lookupValueMap);
-            checkCodeExists(audioStream.getTypeCode(), lookupValueMap);
+            checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
+            checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
             if (audioStream.getTypeCode().equals(VIDEO_STREAM_MAIN_CODE) && !hasMain) hasMain = true;
             else if (audioStream.getTypeCode().equals(VIDEO_STREAM_SUB_CODE) && !hasSub) hasSub = true;
             else throw new RuntimeException(getMessage("0001.audio-stream.type.exists", lookupValueMap.get(audioStream.getTypeCode())));

@@ -13,15 +13,17 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "\"group\"")
-public class Group {
+@Table(name = "camera_path")
+public class CameraPath {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "camera_id")
+    private Long cameraId;
 
-    private String description;
+    private String name;
+    private String path;
 
     @Column(name = "created_user")
     private String createdUser;

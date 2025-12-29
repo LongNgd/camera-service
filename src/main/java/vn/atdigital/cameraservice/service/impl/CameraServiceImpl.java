@@ -2,6 +2,7 @@ package vn.atdigital.cameraservice.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import openjoe.smart.sso.client.util.ClientContextHolder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import vn.atdigital.cameraservice.common.utils.CommonUtils;
@@ -43,27 +44,29 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     @Transactional
-    public void initializeCamera(CameraInitDTO cameraInitDTO) {
-        Camera camera = createCameraCore(cameraInitDTO.getCameraCore());
+    public void initializeCamera(Long ownerId, String ownerType, CameraInitDTO cameraInitDTO) {
+        Camera camera = createCameraCore(ownerId, ownerType, cameraInitDTO.getCameraCore());
         Long cameraId = camera.getId();
-        Long auditId = commonUtils.saveActionAudit("Demo", INIT_CAMERA, cameraId, CAMERA_TYPE);
+        Long auditId = commonUtils.saveActionAudit(ClientContextHolder.getUser().getUsername(), INIT_CAMERA, cameraId, CAMERA_TYPE);
         commonUtils.saveActionDetail(auditId, CAMERA_TABLE, cameraId, null, camera);
 
         addCameraToUser(cameraId, auditId);
         createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
         createPort(cameraId, cameraInitDTO.getPort(), auditId);
-        createCondition(cameraId, cameraInitDTO.getCondition(), auditId);
-        createVideoStreamList(cameraId, cameraInitDTO.getVideoStreamList(), auditId);
-        createAudio(cameraId, cameraInitDTO.getAudio(), auditId);
-        createPtzSettings(cameraId, cameraInitDTO.getPtzSettings(), auditId);
+        if (cameraInitDTO.getCondition() != null) createCondition(cameraId, cameraInitDTO.getCondition(), auditId);
+        if (cameraInitDTO.getVideoStreamList() != null) createVideoStreamList(cameraId, cameraInitDTO.getVideoStreamList(), auditId);
+        if (cameraInitDTO.getAudio() != null) createAudio(cameraId, cameraInitDTO.getAudio(), auditId);
+        if (cameraInitDTO.getPtzSettings() != null) createPtzSettings(cameraId, cameraInitDTO.getPtzSettings(), auditId);
     }
 
-    private Camera createCameraCore(CameraCoreDTO cameraCore) {
+    private Camera createCameraCore(Long ownerId, String ownerType, CameraCoreDTO cameraCore) {
         cameraHelper.validateCameraCore(cameraCore);
 
         Camera camera = new Camera();
         BeanUtils.copyProperties(cameraCore, camera);
-        camera.setCreatedUser("Demo"); // TODO user real user
+        camera.setOwnerId(ownerId);
+        camera.setOwnerType(ownerType);
+        camera.setCreatedUser(ClientContextHolder.getUser().getUsername());
         camera.setCreatedDatetime(LocalDateTime.now());
         camera.setStatus(ACTIVE);
         camera = cameraRepository.save(camera);
@@ -73,9 +76,9 @@ public class CameraServiceImpl implements CameraService {
 
     private void addCameraToUser(Long cameraId, Long auditId) {
         UserCamera userCamera = UserCamera.builder()
-                .userId(-1L) // TODO add real user
+                .userId(ClientContextHolder.getUser().getId())
                 .cameraId(cameraId)
-                .createdUser("Demo") // TODO use real user
+                .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)
                 .build();
@@ -90,7 +93,7 @@ public class CameraServiceImpl implements CameraService {
         CameraTcpIp cameraTcpIp = new CameraTcpIp();
         BeanUtils.copyProperties(tcpIp, cameraTcpIp);
         cameraTcpIp.setCameraId(cameraId);
-        cameraTcpIp.setCreatedUser("Demo"); // TODO user real user
+        cameraTcpIp.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraTcpIp.setCreatedDatetime(LocalDateTime.now());
         cameraTcpIp.setStatus(ACTIVE);
         cameraTcpIp = cameraTcpIpRepository.save(cameraTcpIp);
@@ -107,7 +110,7 @@ public class CameraServiceImpl implements CameraService {
         TcpIpV4 tcpIpV4 = TcpIpV4.builder()
                 .cameraTcpId(cameraTcpId)
                 .subnetMask(subnetMask)
-                .createdUser("Demo") // TODO user real user
+                .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)
                 .build();
@@ -121,7 +124,7 @@ public class CameraServiceImpl implements CameraService {
                 .cameraTcpId(cameraTcpId)
                 .linkAddress(linkAddress)
                 .cidrNotation(cidrNotation)
-                .createdUser("Demo") // TODO user real user
+                .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)
                 .build();
@@ -141,7 +144,7 @@ public class CameraServiceImpl implements CameraService {
                 .httpPort(port.getHttpPort())
                 .rtspPort(port.getRtspPort())
                 .httpsPort(port.getHttpsPort())
-                .createdUser("Demo") // TODO user real user
+                .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)
                 .build();
@@ -157,7 +160,7 @@ public class CameraServiceImpl implements CameraService {
                 .cameraId(cameraId)
                 .profileCode(condition.getProfileCode())
                 .colorizationCode(condition.getColorizationCode())
-                .createdUser("Demo") // TODO user real user
+                .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)
                 .build();
@@ -175,7 +178,7 @@ public class CameraServiceImpl implements CameraService {
         CameraConditionBasic cameraConditionBasic = new CameraConditionBasic();
         BeanUtils.copyProperties(condition, cameraConditionBasic);
         cameraConditionBasic.setCameraConditionId(cameraConditionId);
-        cameraConditionBasic.setCreatedUser("Demo"); // TODO user real user
+        cameraConditionBasic.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraConditionBasic.setCreatedDatetime(LocalDateTime.now());
         cameraConditionBasic.setStatus(ACTIVE);
         cameraConditionBasic = cameraConditionBasicRepository.save(cameraConditionBasic);
@@ -187,7 +190,7 @@ public class CameraServiceImpl implements CameraService {
         CameraConditionImage cameraConditionImage = new CameraConditionImage();
         BeanUtils.copyProperties(condition, cameraConditionImage);
         cameraConditionImage.setCameraConditionId(cameraConditionId);
-        cameraConditionImage.setCreatedUser("Demo"); // TODO user real user
+        cameraConditionImage.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraConditionImage.setCreatedDatetime(LocalDateTime.now());
         cameraConditionImage.setStatus(ACTIVE);
         cameraConditionImage = cameraConditionImageRepository.save(cameraConditionImage);
@@ -199,7 +202,7 @@ public class CameraServiceImpl implements CameraService {
         CameraConditionAgc cameraConditionAgc = new CameraConditionAgc();
         BeanUtils.copyProperties(condition, cameraConditionAgc);
         cameraConditionAgc.setCameraConditionId(cameraConditionId);
-        cameraConditionAgc.setCreatedUser("Demo"); // TODO user real user
+        cameraConditionAgc.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraConditionAgc.setCreatedDatetime(LocalDateTime.now());
         cameraConditionAgc.setStatus(ACTIVE);
         cameraConditionAgc = cameraConditionAgcRepository.save(cameraConditionAgc);
@@ -211,7 +214,7 @@ public class CameraServiceImpl implements CameraService {
         CameraConditionFfc cameraConditionFfc = new CameraConditionFfc();
         BeanUtils.copyProperties(condition, cameraConditionFfc);
         cameraConditionFfc.setCameraConditionId(cameraConditionId);
-        cameraConditionFfc.setCreatedUser("Demo"); // TODO user real user
+        cameraConditionFfc.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraConditionFfc.setCreatedDatetime(LocalDateTime.now());
         cameraConditionFfc.setStatus(ACTIVE);
         cameraConditionFfc = cameraConditionFfcRepository.save(cameraConditionFfc);
@@ -226,7 +229,7 @@ public class CameraServiceImpl implements CameraService {
             CameraVideoStream cameraVideoStream = new CameraVideoStream();
             BeanUtils.copyProperties(videoStream, cameraVideoStream);
             cameraVideoStream.setCameraId(cameraId);
-            cameraVideoStream.setCreatedUser("Demo"); // TODO user real user
+            cameraVideoStream.setCreatedUser(ClientContextHolder.getUser().getUsername());
             cameraVideoStream.setCreatedDatetime(LocalDateTime.now());
             cameraVideoStream.setStatus(ACTIVE);
             cameraVideoStream = cameraVideoStreamRepository.save(cameraVideoStream);
@@ -241,7 +244,7 @@ public class CameraServiceImpl implements CameraService {
         CameraAudio cameraAudio = new CameraAudio();
         BeanUtils.copyProperties(audio, cameraAudio);
         cameraAudio.setCameraId(cameraId);
-        cameraAudio.setCreatedUser("Demo"); // TODO user real user
+        cameraAudio.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraAudio.setCreatedDatetime(LocalDateTime.now());
         cameraAudio.setStatus(ACTIVE);
         cameraAudio = cameraAudioRepository.save(cameraAudio);
@@ -256,7 +259,7 @@ public class CameraServiceImpl implements CameraService {
         CameraAudioStream cameraAudioStream = new CameraAudioStream();
         BeanUtils.copyProperties(audioStream, cameraAudioStream);
         cameraAudioStream.setCameraAudioId(cameraAudioId);
-        cameraAudioStream.setCreatedUser("Demo"); // TODO user real user
+        cameraAudioStream.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraAudioStream.setCreatedDatetime(LocalDateTime.now());
         cameraAudioStream.setStatus(ACTIVE);
         cameraAudioStream = cameraAudioStreamRepository.save(cameraAudioStream);
@@ -270,7 +273,7 @@ public class CameraServiceImpl implements CameraService {
         CameraPtzSettings cameraPtzSettings = new CameraPtzSettings();
         BeanUtils.copyProperties(ptzSettings, cameraPtzSettings);
         cameraPtzSettings.setCameraId(cameraId);
-        cameraPtzSettings.setCreatedUser("Demo"); // TODO user real user
+        cameraPtzSettings.setCreatedUser(ClientContextHolder.getUser().getUsername());
         cameraPtzSettings.setCreatedDatetime(LocalDateTime.now());
         cameraPtzSettings.setStatus(ACTIVE);
         cameraPtzSettings = cameraPtzSettingsRepository.save(cameraPtzSettings);
