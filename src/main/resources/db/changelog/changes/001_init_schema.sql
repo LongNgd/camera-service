@@ -100,7 +100,7 @@ CREATE TABLE "camera_condition" (
 -- changeset longnd:008
 CREATE TABLE "camera_condition_basic" (
                                           "id" int8 PRIMARY KEY,
-                                          "camera_id" int8,
+                                          "camera_condition_id" int8,
                                           "brightness" integer,
                                           "contrast" integer,
                                           "sharpness" integer,
@@ -120,7 +120,7 @@ CREATE TABLE "camera_condition_basic" (
 -- changeset longnd:009
 CREATE TABLE "camera_condition_image" (
                                           "id" int8 PRIMARY KEY,
-                                          "camera_id" int8,
+                                          "camera_condition_id" int8,
                                           "basic_nr" integer,
                                           "front_module" integer,
                                           "rear_chip" integer,
@@ -134,7 +134,7 @@ CREATE TABLE "camera_condition_image" (
 -- changeset longnd:010
 CREATE TABLE "camera_condition_agc" (
                                         "id" int8 PRIMARY KEY,
-                                        "camera_id" int8,
+                                        "camera_condition_id" int8,
                                         "gain_mode" integer,
                                         "agc_plateau" integer,
                                         "gain_mode_code" varchar,
@@ -148,7 +148,7 @@ CREATE TABLE "camera_condition_agc" (
 -- changeset longnd:011
 CREATE TABLE "camera_condition_ffc" (
                                         "id" int8 PRIMARY KEY,
-                                        "camera_id" int8,
+                                        "camera_condition_id" int8,
                                         "ffc_mode_code" varchar,
                                         "ffc_period" integer,
                                         "created_user" varchar,
@@ -166,7 +166,7 @@ CREATE TABLE "camera_video_stream" (
                                        "resolution_code" varchar,
                                        "frame_rate_code" varchar,
                                        "bit_rate_type_code" varchar,
-                                       "reference_bit_rate_code" varchar,
+                                       "reference_bit_rate" varchar,
                                        "bit_rate_code" varchar,
                                        "i_frame_interval" integer,
                                        "svc_code" varchar,
@@ -316,13 +316,13 @@ ALTER TABLE "group_authority" ADD FOREIGN KEY ("authority_id") REFERENCES "autho
 -- changeset longnd:027
 ALTER TABLE "camera_condition" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");
 -- changeset longnd:028
-ALTER TABLE "camera_condition_basic" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");
+ALTER TABLE "camera_condition_basic" ADD FOREIGN KEY ("camera_condition_id") REFERENCES "camera_condition" ("id");
 -- changeset longnd:029
-ALTER TABLE "camera_condition_image" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");
+ALTER TABLE "camera_condition_image" ADD FOREIGN KEY ("camera_condition_id") REFERENCES "camera_condition" ("id");
 -- changeset longnd:030
-ALTER TABLE "camera_condition_agc" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");
+ALTER TABLE "camera_condition_agc" ADD FOREIGN KEY ("camera_condition_id") REFERENCES "camera_condition" ("id");
 -- changeset longnd:031
-ALTER TABLE "camera_condition_ffc" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");
+ALTER TABLE "camera_condition_ffc" ADD FOREIGN KEY ("camera_condition_id") REFERENCES "camera_condition" ("id");
 
 -- changeset longnd:032
 ALTER TABLE "camera_video_stream" ADD FOREIGN KEY ("camera_id") REFERENCES "camera" ("id");

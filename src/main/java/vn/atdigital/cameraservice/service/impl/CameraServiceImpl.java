@@ -165,16 +165,16 @@ public class CameraServiceImpl implements CameraService {
 
         commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_TABLE, cameraCondition.getId(), null, cameraCondition);
 
-        createConditionBasic(cameraId, condition, auditId);
-        createConditionImage(cameraId, condition, auditId);
-        createConditionAgc(cameraId, condition, auditId);
-        createConditionFfc(cameraId, condition, auditId);
+        createConditionBasic(cameraCondition.getId(), condition, auditId);
+        createConditionImage(cameraCondition.getId(), condition, auditId);
+        createConditionAgc(cameraCondition.getId(), condition, auditId);
+        createConditionFfc(cameraCondition.getId(), condition, auditId);
     }
 
-    private void createConditionBasic(Long cameraId, ConditionDTO condition, Long auditId) {
+    private void createConditionBasic(Long cameraConditionId, ConditionDTO condition, Long auditId) {
         CameraConditionBasic cameraConditionBasic = new CameraConditionBasic();
         BeanUtils.copyProperties(condition, cameraConditionBasic);
-        cameraConditionBasic.setCameraId(cameraId);
+        cameraConditionBasic.setCameraConditionId(cameraConditionId);
         cameraConditionBasic.setCreatedUser("Demo"); // TODO user real user
         cameraConditionBasic.setCreatedDatetime(LocalDateTime.now());
         cameraConditionBasic.setStatus(ACTIVE);
@@ -183,10 +183,10 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_BASIC_TABLE, cameraConditionBasic.getId(), null, cameraConditionBasic);
     }
 
-    private void createConditionImage(Long cameraId, ConditionDTO condition, Long auditId) {
+    private void createConditionImage(Long cameraConditionId, ConditionDTO condition, Long auditId) {
         CameraConditionImage cameraConditionImage = new CameraConditionImage();
         BeanUtils.copyProperties(condition, cameraConditionImage);
-        cameraConditionImage.setCameraId(cameraId);
+        cameraConditionImage.setCameraConditionId(cameraConditionId);
         cameraConditionImage.setCreatedUser("Demo"); // TODO user real user
         cameraConditionImage.setCreatedDatetime(LocalDateTime.now());
         cameraConditionImage.setStatus(ACTIVE);
@@ -195,10 +195,10 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_IMAGE_TABLE, cameraConditionImage.getId(), null, cameraConditionImage);
     }
 
-    private void createConditionAgc(Long cameraId, ConditionDTO condition, Long auditId) {
+    private void createConditionAgc(Long cameraConditionId, ConditionDTO condition, Long auditId) {
         CameraConditionAgc cameraConditionAgc = new CameraConditionAgc();
         BeanUtils.copyProperties(condition, cameraConditionAgc);
-        cameraConditionAgc.setCameraId(cameraId);
+        cameraConditionAgc.setCameraConditionId(cameraConditionId);
         cameraConditionAgc.setCreatedUser("Demo"); // TODO user real user
         cameraConditionAgc.setCreatedDatetime(LocalDateTime.now());
         cameraConditionAgc.setStatus(ACTIVE);
@@ -207,10 +207,10 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_AGC_TABLE, cameraConditionAgc.getId(), null, cameraConditionAgc);
     }
 
-    private void createConditionFfc(Long cameraId, ConditionDTO condition, Long auditId) {
+    private void createConditionFfc(Long cameraConditionId, ConditionDTO condition, Long auditId) {
         CameraConditionFfc cameraConditionFfc = new CameraConditionFfc();
         BeanUtils.copyProperties(condition, cameraConditionFfc);
-        cameraConditionFfc.setCameraId(cameraId);
+        cameraConditionFfc.setCameraConditionId(cameraConditionId);
         cameraConditionFfc.setCreatedUser("Demo"); // TODO user real user
         cameraConditionFfc.setCreatedDatetime(LocalDateTime.now());
         cameraConditionFfc.setStatus(ACTIVE);

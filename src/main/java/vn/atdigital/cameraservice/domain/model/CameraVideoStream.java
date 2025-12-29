@@ -37,8 +37,8 @@ public class CameraVideoStream {
     @Column(name = "bit_rate_type_code")
     private String bitRateTypeCode;
 
-    @Column(name = "reference_bit_rate_code")
-    private String referenceBitRateCode;
+    @Column(name = "reference_bit_rate")
+    private String referenceBitRate;
 
     @Column(name = "bit_rate_code")
     private String bitRateCode;

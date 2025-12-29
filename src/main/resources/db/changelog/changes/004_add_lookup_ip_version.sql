@@ -22,7 +22,7 @@ INSERT INTO lookup_value
 VALUES
     (
         (SELECT id FROM lookup_type WHERE code = 'IP_VERSION'),
-        'IPV4',
+        'VERSION_IPV4',
         'IPv4',
         'Internet Protocol Version 4',
         4,
@@ -31,7 +31,7 @@ VALUES
     ),
     (
         (SELECT id FROM lookup_type WHERE code = 'IP_VERSION'),
-        'IPV6',
+        'VERSION_IPV6',
         'IPv6',
         'Internet Protocol Version 6',
         6,

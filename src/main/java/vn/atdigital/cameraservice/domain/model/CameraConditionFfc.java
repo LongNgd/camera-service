@@ -19,8 +19,8 @@ public class CameraConditionFfc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "camera_id")
-    private Long cameraId;
+    @Column(name = "camera_condition_id")
+    private Long cameraConditionId;
 
     @Column(name = "ffc_mode_code")
     private String ffcModeCode;
