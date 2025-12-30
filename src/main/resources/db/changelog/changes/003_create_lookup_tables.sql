@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset longn:043
+-- changeset longn:039
 CREATE TABLE lookup_type (
                              id                  BIGSERIAL PRIMARY KEY,
                              code                VARCHAR(100) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE lookup_type (
                              CONSTRAINT uk_lookup_type_code UNIQUE (code)
 );
 
--- changeset longn:044
+-- changeset longn:040
 CREATE TABLE lookup_value (
                               id                  BIGSERIAL PRIMARY KEY,
                               lookup_type_id      BIGINT NOT NULL,

@@ -28,15 +28,15 @@ public class CameraCondition {
     @Column(name = "colorization_code")
     private String colorizationCode;
 
-    private String brightness;
-    private String contrast;
-    private String sharpness;
+    private Integer brightness;
+    private Integer contrast;
+    private Integer sharpness;
 
     @Column(name = "detail_enhancement")
-    private String detailEnhancement;
+    private Integer detailEnhancement;
 
     @Column(name = "histogram_equalization")
-    private String histogramEqualization;
+    private Integer histogramEqualization;
 
     private Integer ezoom;
 
@@ -50,19 +50,19 @@ public class CameraCondition {
     private String flipCode;
 
     @Column(name = "basic_nr")
-    private String basicNr;
+    private Integer basicNr;
 
     @Column(name = "front_module")
-    private String frontModule;
+    private Integer frontModule;
 
     @Column(name = "rear_chip")
-    private String rearChip;
+    private Integer rearChip;
 
     @Column(name = "gain_mode")
-    private String gainMode;
+    private Integer gainMode;
 
     @Column(name = "agc_plateau")
-    private String agcPlateau;
+    private Integer agcPlateau;
 
     @Column(name = "gain_mode_code")
     private String gainModeCode;
@@ -71,7 +71,7 @@ public class CameraCondition {
     private String ffcModeCode;
 
     @Column(name = "ffc_period")
-    private String ffcPeriod;
+    private Integer ffcPeriod;
 
     @Column(name = "created_user")
     private String createdUser;

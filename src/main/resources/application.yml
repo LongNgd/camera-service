@@ -39,5 +39,5 @@ smart:
 feign-client:
   peer-service:
     name: peer-service
-    url: http://xxx.xxx.xxx.xxx:xxx
+    url: http://192.168.10.11
     path: /peer

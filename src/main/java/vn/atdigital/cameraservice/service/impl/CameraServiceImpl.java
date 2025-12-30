@@ -54,8 +54,8 @@ public class CameraServiceImpl implements CameraService {
 
         addCameraToUser(cameraId, auditId);
         addCameraPath(cameraId, cameraInitDTO.getConnection(), auditId);
-        if(cameraInitDTO.getTcpIp() != null) createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
-        if(cameraInitDTO.getPort() != null) createPort(cameraId, cameraInitDTO.getPort(), auditId);
+        if (cameraInitDTO.getTcpIp() != null) createTcpIp(cameraId, cameraInitDTO.getTcpIp(), auditId);
+        if (cameraInitDTO.getPort() != null) createPort(cameraId, cameraInitDTO.getPort(), auditId);
         if (cameraInitDTO.getCondition() != null) createCondition(cameraId, cameraInitDTO.getCondition(), auditId);
         if (cameraInitDTO.getVideoStreamList() != null) createVideoStreamList(cameraId, cameraInitDTO.getVideoStreamList(), auditId);
         if (cameraInitDTO.getAudio() != null) createAudio(cameraId, cameraInitDTO.getAudio(), auditId);

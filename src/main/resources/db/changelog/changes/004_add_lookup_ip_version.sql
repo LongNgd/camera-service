@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset longnd:045
+-- changeset longnd:041
 INSERT INTO lookup_type (code, name, description)
 VALUES (
            'IP_VERSION',
@@ -8,7 +8,7 @@ VALUES (
            'Phiên bản giao thức IP'
        );
 
--- changeset longnd:046
+-- changeset longnd:042
 INSERT INTO lookup_value
 (
     lookup_type_id,

@@ -1,4 +1,4 @@
-package vn.atdigital.cameraservice.domain;
+package vn.atdigital.cameraservice.domain.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -7,7 +7,6 @@ import vn.atdigital.cameraservice.domain.message.ResponseMessage;
 import static vn.atdigital.cameraservice.common.Constants.STATUS_COMMON.RESPONSE_STATUS_FALSE;
 import static vn.atdigital.cameraservice.common.Constants.STATUS_COMMON.RESPONSE_STATUS_TRUE;
 
-
 public abstract class CommonController {
 
     protected <T> ResponseEntity<?> toSuccessResult(T data, String returnCode, String successMessage) {

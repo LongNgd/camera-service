@@ -2,7 +2,6 @@ package vn.atdigital.cameraservice.domain.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import vn.atdigital.cameraservice.domain.BaseDTO;
 
 import java.io.Serializable;
 import java.util.List;

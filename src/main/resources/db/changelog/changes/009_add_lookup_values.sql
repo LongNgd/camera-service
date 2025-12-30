@@ -1,27 +1,27 @@
 -- liquibase formatted sql
 
--- changeset longnd:056
+-- changeset longnd:052
 INSERT INTO lookup_type (code, name)
 VALUES (
            'CONDITION_PROFILE',
            'Condition profile'
        );
 
--- changeset longnd:057
+-- changeset longnd:053
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_GENERAL','General',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_DAY','Day',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_NIGHT','Day',TRUE);
 
--- changeset longnd:058
+-- changeset longnd:054
 INSERT INTO lookup_type (code, name)
 VALUES (
            'CONDITION_COLORIZATION',
            'Condition colorization'
        );
 
--- changeset longnd:059
+-- changeset longnd:055
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_COLORIZATION'),'COLORIZATION_WHITE_HOT','White Hot',TRUE),
@@ -43,14 +43,14 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_COLORIZATION'),'COLORIZATION_AUTUMN','Autumn',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_COLORIZATION'),'COLORIZATION_WINTER','Winter',TRUE);
 
--- changeset longnd:060
+-- changeset longnd:056
 INSERT INTO lookup_type (code, name)
 VALUES (
         'CONDITION_ROI_TYPE',
         'Condition roi type'
        );
 
--- changeset longnd:061
+-- changeset longnd:057
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_ROI_TYPE'),'ROI_25','Center 25%',TRUE),
@@ -61,14 +61,14 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_ROI_TYPE'),'ROI_HORIZON','Horizon',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_ROI_TYPE'),'ROI_SKY','Sky',TRUE);
 
--- changeset longnd:062
+-- changeset longnd:058
 INSERT INTO lookup_type (code, name)
 VALUES (
            'CONDITION_FLIP',
            'Condition flip'
        );
 
--- changeset longnd:063
+-- changeset longnd:059
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_FLIP'),'FLIP_0','0°',TRUE),
@@ -76,52 +76,52 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_FLIP'),'FLIP_180','180°',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_FLIP'),'FLIP_270','270°',TRUE);
 
--- changeset longnd:064
+-- changeset longnd:060
 INSERT INTO lookup_type (code, name)
 VALUES (
            'CONDITION_GAIN_MODE',
            'Condition gain mode'
        );
 
--- changeset longnd:065
+-- changeset longnd:061
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_GAIN_MODE'),'GAIN_LOW_TEMPERATURE','Low Temperature',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_GAIN_MODE'),'GAIN_HIGH_TEMPERATURE','High Temperature',TRUE);
 
--- changeset longnd:066
+-- changeset longnd:062
 INSERT INTO lookup_type (code, name)
 VALUES (
            'CONDITION_FFC_MODE',
            'Condition ffc mode'
        );
 
--- changeset longnd:067
+-- changeset longnd:063
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_FFC_MODE'),'FFC_AUTO','Auto',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_FFC_MODE'),'FFC_MANUAL','Manual',TRUE);
 
--- changeset longnd:068
+-- changeset longnd:064
 INSERT INTO lookup_type (code, name)
 VALUES (
            'TCPIP_ETHERNET_CARD',
            'Tcp/ip ethernet card'
        );
 
--- changeset longnd:069
+-- changeset longnd:065
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'TCPIP_ETHERNET_CARD'),'CARD_WIRE','Wire',TRUE);
 
--- changeset longnd:070
+-- changeset longnd:066
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_ENCODE_MODE',
            'Video encode mode'
        );
 
--- changeset longnd:071
+-- changeset longnd:067
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_ENCODE_MODE'),'ENCODE_H264','H.264',TRUE),
@@ -130,14 +130,14 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_ENCODE_MODE'),'ENCODE_MJPEG','MJPEG',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_ENCODE_MODE'),'ENCODE_H265','H.265',TRUE);
 
--- changeset longnd:072
+-- changeset longnd:068
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_RESOLUTION',
            'Video resolution'
        );
 
--- changeset longnd:073
+-- changeset longnd:069
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_RESOLUTION'),'RESOLUTION_SXGA','1280*1024(SXGA)',TRUE),
@@ -147,14 +147,14 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_RESOLUTION'),'RESOLUTION_640x512','640*512(640x512)',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_RESOLUTION'),'RESOLUTION_640x480','640*480(VGA)',TRUE);
 
--- changeset longnd:074
+-- changeset longnd:070
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_FRAME_RATE',
            'Video frame rate'
        );
 
--- changeset longnd:075
+-- changeset longnd:071
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_FRAME_RATE'),'FPS_1','1',TRUE),
@@ -183,27 +183,27 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_FRAME_RATE'),'FPS_24','24',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_FRAME_RATE'),'FPS_25','25',TRUE);
 
--- changeset longnd:076
+-- changeset longnd:072
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_BIT_RATE_TYPE',
            'Video bit rate type'
        );
 
--- changeset longnd:077
+-- changeset longnd:073
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_BIT_RATE_TYPE'),'BRT_CBR','CBR',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_BIT_RATE_TYPE'),'BRT_VBR','VBR',TRUE);
 
--- changeset longnd:078
+-- changeset longnd:074
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_BIT_RATE',
            'Video bit rate'
        );
 
--- changeset longnd:079
+-- changeset longnd:075
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_BIT_RATE'),'BRATE_160','160',TRUE),
@@ -221,21 +221,21 @@ VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_BIT_RATE'),'BRATE_4096','4096',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_BIT_RATE'),'BRATE_6144','6144',TRUE);
 
--- changeset longnd:080
+-- changeset longnd:076
 INSERT INTO lookup_type (code, name)
 VALUES (
            'VIDEO_SVC',
            'Video svc'
        );
 
--- changeset longnd:081
+-- changeset longnd:077
 INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_SVC'),'SVC_1','1',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_SVC'),'SVC_2','2',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'VIDEO_SVC'),'SVC_3','3',TRUE);
 
--- changeset longnd:082
+-- changeset longnd:078
 INSERT INTO lookup_type (code, name, description)
 VALUES (
            'DEV_TEST_TYPE',
@@ -243,6 +243,6 @@ VALUES (
            'Used for developing purposes'
        );
 
--- changeset longnd:083
+-- changeset longnd:079
 INSERT INTO lookup_value (lookup_type_id, code, name, description, is_active)
 VALUES ((SELECT id FROM lookup_type WHERE code = 'DEV_TEST_TYPE'), 'DEV_TEST', 'Development test', 'Used for developing purposes', TRUE);
