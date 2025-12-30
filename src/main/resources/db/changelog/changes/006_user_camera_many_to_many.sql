@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset longnd:057
+-- changeset longnd:049
 CREATE TABLE user_camera (
                              id                  BIGSERIAL PRIMARY KEY,
                              user_id             INT8,

@@ -1,12 +1,12 @@
 -- liquibase formatted sql
 
--- changeset longnd:061
+-- changeset longnd:053
 DROP TABLE IF EXISTS "camera_video_stream_main";
 
--- changeset longnd:062
+-- changeset longnd:054
 DROP TABLE IF EXISTS "camera_video_stream_sub";
 
--- changeset longnd:063
+-- changeset longnd:055
 ALTER TABLE "camera_video_stream"
     ADD COLUMN "has_watermark_settings" boolean,
     ADD COLUMN "watermark_character" varchar,

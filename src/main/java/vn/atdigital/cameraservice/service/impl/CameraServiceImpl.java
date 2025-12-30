@@ -41,10 +41,6 @@ public class CameraServiceImpl implements CameraService {
     private final CameraAudioRepository cameraAudioRepository;
     private final CameraAudioStreamRepository cameraAudioStreamRepository;
     private final CameraConditionRepository cameraConditionRepository;
-    private final CameraConditionBasicRepository cameraConditionBasicRepository;
-    private final CameraConditionImageRepository cameraConditionImageRepository;
-    private final CameraConditionAgcRepository cameraConditionAgcRepository;
-    private final CameraConditionFfcRepository cameraConditionFfcRepository;
     private final PeerClient peerClient;
     private final CameraPathRepository cameraPathRepository;
 
@@ -184,70 +180,16 @@ public class CameraServiceImpl implements CameraService {
     private void createCondition(Long cameraId, ConditionDTO condition, Long auditId) {
         cameraHelper.validateCondition(condition);
 
-        CameraCondition cameraCondition = CameraCondition.builder()
-                .cameraId(cameraId)
-                .profileCode(condition.getProfileCode())
-                .colorizationCode(condition.getColorizationCode())
-                .createdUser(ClientContextHolder.getUser().getUsername())
-                .createdDatetime(LocalDateTime.now())
-                .status(ACTIVE)
-                .build();
+        CameraCondition cameraCondition = new CameraCondition();
+        BeanUtils.copyProperties(condition, cameraCondition);
+        cameraCondition.setCameraId(cameraId);
+        cameraCondition.setCreatedUser(ClientContextHolder.getUser().getUsername());
+        cameraCondition.setCreatedDatetime(LocalDateTime.now());
+        cameraCondition.setStatus(ACTIVE);
+
         cameraCondition = cameraConditionRepository.save(cameraCondition);
 
         commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_TABLE, cameraCondition.getId(), null, cameraCondition);
-
-        createConditionBasic(cameraCondition.getId(), condition, auditId);
-        createConditionImage(cameraCondition.getId(), condition, auditId);
-        createConditionAgc(cameraCondition.getId(), condition, auditId);
-        createConditionFfc(cameraCondition.getId(), condition, auditId);
-    }
-
-    private void createConditionBasic(Long cameraConditionId, ConditionDTO condition, Long auditId) {
-        CameraConditionBasic cameraConditionBasic = new CameraConditionBasic();
-        BeanUtils.copyProperties(condition, cameraConditionBasic);
-        cameraConditionBasic.setCameraConditionId(cameraConditionId);
-        cameraConditionBasic.setCreatedUser(ClientContextHolder.getUser().getUsername());
-        cameraConditionBasic.setCreatedDatetime(LocalDateTime.now());
-        cameraConditionBasic.setStatus(ACTIVE);
-        cameraConditionBasic = cameraConditionBasicRepository.save(cameraConditionBasic);
-
-        commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_BASIC_TABLE, cameraConditionBasic.getId(), null, cameraConditionBasic);
-    }
-
-    private void createConditionImage(Long cameraConditionId, ConditionDTO condition, Long auditId) {
-        CameraConditionImage cameraConditionImage = new CameraConditionImage();
-        BeanUtils.copyProperties(condition, cameraConditionImage);
-        cameraConditionImage.setCameraConditionId(cameraConditionId);
-        cameraConditionImage.setCreatedUser(ClientContextHolder.getUser().getUsername());
-        cameraConditionImage.setCreatedDatetime(LocalDateTime.now());
-        cameraConditionImage.setStatus(ACTIVE);
-        cameraConditionImage = cameraConditionImageRepository.save(cameraConditionImage);
-
-        commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_IMAGE_TABLE, cameraConditionImage.getId(), null, cameraConditionImage);
-    }
-
-    private void createConditionAgc(Long cameraConditionId, ConditionDTO condition, Long auditId) {
-        CameraConditionAgc cameraConditionAgc = new CameraConditionAgc();
-        BeanUtils.copyProperties(condition, cameraConditionAgc);
-        cameraConditionAgc.setCameraConditionId(cameraConditionId);
-        cameraConditionAgc.setCreatedUser(ClientContextHolder.getUser().getUsername());
-        cameraConditionAgc.setCreatedDatetime(LocalDateTime.now());
-        cameraConditionAgc.setStatus(ACTIVE);
-        cameraConditionAgc = cameraConditionAgcRepository.save(cameraConditionAgc);
-
-        commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_AGC_TABLE, cameraConditionAgc.getId(), null, cameraConditionAgc);
-    }
-
-    private void createConditionFfc(Long cameraConditionId, ConditionDTO condition, Long auditId) {
-        CameraConditionFfc cameraConditionFfc = new CameraConditionFfc();
-        BeanUtils.copyProperties(condition, cameraConditionFfc);
-        cameraConditionFfc.setCameraConditionId(cameraConditionId);
-        cameraConditionFfc.setCreatedUser(ClientContextHolder.getUser().getUsername());
-        cameraConditionFfc.setCreatedDatetime(LocalDateTime.now());
-        cameraConditionFfc.setStatus(ACTIVE);
-        cameraConditionFfc = cameraConditionFfcRepository.save(cameraConditionFfc);
-
-        commonUtils.saveActionDetail(auditId, CAMERA_CONDITION_FFC_TABLE, cameraConditionFfc.getId(), null, cameraConditionFfc);
     }
 
     private void createVideoStreamList(Long cameraId, List<VideoStreamDTO> videoStreamList, Long auditId) {
