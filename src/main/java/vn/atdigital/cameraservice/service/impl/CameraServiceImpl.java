@@ -4,9 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import openjoe.smart.sso.client.util.ClientContextHolder;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+import vn.atdigital.cameraservice.common.BaseResponse;
 import vn.atdigital.cameraservice.common.utils.CommonUtils;
 import vn.atdigital.cameraservice.domain.DTO.*;
 import vn.atdigital.cameraservice.domain.model.*;
@@ -23,7 +22,6 @@ import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.*;
 import static vn.atdigital.cameraservice.common.Constants.PK_TYPE.CAMERA_TYPE;
 import static vn.atdigital.cameraservice.common.Constants.TABLE_NAME.*;
 import static vn.atdigital.cameraservice.common.Constants.TABLE_STATUS.ACTIVE;
-import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -91,17 +89,15 @@ public class CameraServiceImpl implements CameraService {
     }
 
     private void addCameraPath(Long cameraId, ConnectionDTO connection, Long auditId) {
-        ResponseEntity<List<PathConfigDTO>> response = peerClient.addPath(List.of(connection));
+        BaseResponse<List<PathConfigDTO>> response = peerClient.addPath(List.of(connection));
 
-        Assert.isTrue(response.getStatusCode().is2xxSuccessful(), getMessage("0001.feign-client.error", response.getBody()));
-        Assert.isTrue(response.getBody() != null, getMessage("0001.feign-client.error", response.getBody()));
-
-        PathConfigDTO pathConfig = response.getBody().getFirst();
+        PathConfigDTO pathConfig = response.getData().getFirst();
 
         CameraPath cameraPath = CameraPath.builder()
                 .cameraId(cameraId)
                 .name(pathConfig.getName())
-                .path(pathConfig.getSource())
+                .path(pathConfig.getPath())
+                .source(pathConfig.getSource())
                 .createdUser(ClientContextHolder.getUser().getUsername())
                 .createdDatetime(LocalDateTime.now())
                 .status(ACTIVE)

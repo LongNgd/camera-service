@@ -99,6 +99,12 @@
             <groupId>io.github.openjoe</groupId>
             <artifactId>smart-sso-starter-client-redis</artifactId>
             <version>1.8.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- ===== DEVTOOLS ===== -->

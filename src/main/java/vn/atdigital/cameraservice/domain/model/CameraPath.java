@@ -24,6 +24,7 @@ public class CameraPath {
 
     private String name;
     private String path;
+    private String source;
 
     @Column(name = "created_user")
     private String createdUser;

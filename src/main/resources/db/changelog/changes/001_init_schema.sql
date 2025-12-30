@@ -216,6 +216,7 @@ CREATE TABLE "camera_path" (
                                "camera_id" int8,
                                "name" varchar,
                                "path" varchar,
+                                "source" varchar,
                                "created_user" varchar,
                                "created_datetime" timestamp(6),
                                "updated_user" varchar,

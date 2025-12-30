@@ -1,9 +1,9 @@
 package vn.atdigital.cameraservice.feignclient;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import vn.atdigital.cameraservice.common.BaseResponse;
 import vn.atdigital.cameraservice.domain.DTO.ConnectionDTO;
 import vn.atdigital.cameraservice.domain.DTO.PathConfigDTO;
 
@@ -16,5 +16,5 @@ import java.util.List;
 )
 public interface PeerClient {
     @PostMapping("/paths/add")
-    ResponseEntity<List<PathConfigDTO>> addPath(@RequestBody List<ConnectionDTO> paths);
+    BaseResponse<List<PathConfigDTO>> addPath(@RequestBody List<ConnectionDTO> paths);
 }

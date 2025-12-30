@@ -26,7 +26,6 @@ public class PathConfigDTO extends BaseDTO implements Serializable {
     private String srtReadPassphrase;
     private String fallback;
     private Boolean useAbsoluteTimestamp;
-
     /* =======================
      * Recording
      * ======================= */
@@ -37,13 +36,11 @@ public class PathConfigDTO extends BaseDTO implements Serializable {
     private String recordMaxPartSize;
     private String recordSegmentDuration;
     private String recordDeleteAfter;
-
     /* =======================
      * Publisher overrides
      * ======================= */
     private Boolean overridePublisher;
     private String srtPublishPassphrase;
-
     /* =======================
      * RTSP
      * ======================= */
@@ -96,7 +93,6 @@ public class PathConfigDTO extends BaseDTO implements Serializable {
     private String rpiCameraSoftwareH264Profile;
     private String rpiCameraSoftwareH264Level;
     private Integer rpiCameraMJPEGQuality;
-
     /* =======================
      * Hooks / Commands
      * ======================= */
@@ -115,4 +111,8 @@ public class PathConfigDTO extends BaseDTO implements Serializable {
     private String runOnUnread;
     private String runOnRecordSegmentCreate;
     private String runOnRecordSegmentComplete;
+    /* =======================
+     * Custom
+     * ======================= */
+    private String path;
 }
