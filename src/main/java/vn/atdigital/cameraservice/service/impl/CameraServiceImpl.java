@@ -63,6 +63,7 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
+    @Transactional
     public void configCamera(Long cameraId, CameraConfigDTO cameraInitDTO) {
         Camera camera = cameraRepository.findByIdAndStatus(cameraId, ACTIVE).orElseThrow(() -> new NoSuchElementException(getMessage("0001.camera.null-or-empty", cameraId)));
         Camera oldCamera = new Camera();
