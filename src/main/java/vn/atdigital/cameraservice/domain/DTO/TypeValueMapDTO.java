@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class TypeValueMapDTO {
     private String type;
-    private List<String> valueList;
+    private List<String> codeList;
 }
