@@ -12,7 +12,7 @@ INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
 VALUES
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_GENERAL','General',TRUE),
     ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_DAY','Day',TRUE),
-    ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_NIGHT','Day',TRUE);
+    ((SELECT id FROM lookup_type WHERE code = 'CONDITION_PROFILE'),'PROFILE_NIGHT','Night',TRUE);
 
 -- changeset longnd:054
 INSERT INTO lookup_type (code, name)

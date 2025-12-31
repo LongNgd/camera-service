@@ -22,6 +22,10 @@ public interface Constants {
         public static final String RETURN_CODE_ERROR_NOTFOUND = "404";
     }
 
+    final class API_SUCCESS_MESSAGE {
+        public static final String GET_LOOKUP_INFO = "Get lookup info successfully";
+    }
+
     final class STATUS_COMMON {
         public static final Boolean RESPONSE_STATUS_TRUE = true;
         public static final Boolean RESPONSE_STATUS_FALSE = false;
