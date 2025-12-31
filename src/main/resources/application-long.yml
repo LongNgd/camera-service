@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/camera
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: long2112

@@ -1,7 +1,5 @@
 server:
   port: 8082
-  servlet:
-    context-path: /camera
 
 spring:
   application:
@@ -22,3 +20,24 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  data:
+    redis:
+      host: 103.163.118.212
+      port: 30379
+      password: atenergy123
+      database: 0
+
+smart:
+  sso:
+    server-url: http://103.163.118.212:30832
+    client-id: 1006
+    client-secret: a2775705950e4fa9684c4db00ec2a2d4
+    logout-callback-path: /auth/sso/logout-callback
+    exclude-urls: /auth/*, /actuator/*
+    h5-enabled: true
+
+feign-client:
+  peer-service:
+    name: peer-service
+    url: http://192.168.127.12:8081
+    path: /peer

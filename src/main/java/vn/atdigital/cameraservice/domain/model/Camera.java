@@ -27,6 +27,9 @@ public class Camera {
 
     private String name;
 
+    private String username;
+    private String password;
+
     @Column(name = "language_code")
     private String languageCode;
 
@@ -45,5 +48,5 @@ public class Camera {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }

@@ -1,3 +1,19 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changes/001_init_schema.sql
+  - include:
+      file: db/changelog/changes/002_alter_status_to_int8.sql
+  - include:
+      file: db/changelog/changes/003_create_lookup_tables.sql
+  - include:
+      file: db/changelog/changes/004_add_lookup_ip_version.sql
+  - include:
+      file: db/changelog/changes/005_add_camera_auth_fields.sql
+  - include:
+      file: db/changelog/changes/006_user_camera_many_to_many.sql
+  - include:
+      file: db/changelog/changes/007_alter_lookup_tables.sql
+  - include:
+      file: db/changelog/changes/008_merge_video_stream_main_sub.sql
+  - include:
+      file: db/changelog/changes/009_add_lookup_values.sql

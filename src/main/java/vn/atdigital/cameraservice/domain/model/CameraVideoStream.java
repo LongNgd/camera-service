@@ -22,6 +22,9 @@ public class CameraVideoStream {
     @Column(name = "camera_id")
     private Long cameraId;
 
+    @Column(name = "type_code")
+    private String typeCode;
+
     @Column(name = "encode_mode_code")
     private String encodeModeCode;
 
@@ -34,8 +37,8 @@ public class CameraVideoStream {
     @Column(name = "bit_rate_type_code")
     private String bitRateTypeCode;
 
-    @Column(name = "reference_bit_rate_code")
-    private String referenceBitRateCode;
+    @Column(name = "reference_bit_rate")
+    private String referenceBitRate;
 
     @Column(name = "bit_rate_code")
     private String bitRateCode;
@@ -45,6 +48,17 @@ public class CameraVideoStream {
 
     @Column(name = "svc_code")
     private String svcCode;
+
+    // Main
+    @Column(name = "has_watermark_settings")
+    private Boolean hasWatermarkSettings;
+
+    @Column(name = "watermark_character")
+    private String watermarkCharacter;
+
+    // Sub
+    @Column(name = "is_enabled")
+    private Boolean isEnabled;
 
     @Column(name = "created_user")
     private String createdUser;
@@ -58,5 +72,5 @@ public class CameraVideoStream {
     @Column(name = "updated_datetime")
     private LocalDateTime updatedDatetime;
 
-    private String status;
+    private Long status;
 }

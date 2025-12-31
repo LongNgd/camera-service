@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import vn.atdigital.cameraservice.domain.model.TcpIpV4;
 
+import java.util.Optional;
+
 @Repository
 public interface TcpIpV4Repository extends JpaRepository<TcpIpV4, Long> {
+    Optional<TcpIpV4> findByCameraTcpIdAndStatus(Long cameraTcpId, Long active);
 }
