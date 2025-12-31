@@ -246,3 +246,30 @@ VALUES (
 -- changeset longnd:079
 INSERT INTO lookup_value (lookup_type_id, code, name, description, is_active)
 VALUES ((SELECT id FROM lookup_type WHERE code = 'DEV_TEST_TYPE'), 'DEV_TEST', 'Development test', 'Used for developing purposes', TRUE);
+
+-- changeset longnd:080
+INSERT INTO lookup_type (code, name)
+VALUES (
+           'TCPIP_MODE',
+           'Tcp/ip mode'
+       );
+
+-- changeset longnd:081
+INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
+VALUES
+    ((SELECT id FROM lookup_type WHERE code = 'TCPIP_MODE'),'MODE_STATIC','Static',TRUE),
+    ((SELECT id FROM lookup_type WHERE code = 'TCPIP_MODE'),'MODE_DHCP','DHCP',TRUE);
+
+-- changeset longnd:082
+INSERT INTO lookup_type (code, name, description)
+VALUES (
+           'STREAM_TYPE',
+           'Stream type',
+        'Stream type used for both video and audio'
+       );
+
+-- changeset longnd:083
+INSERT INTO lookup_value (lookup_type_id, code, name, is_active)
+VALUES
+    ((SELECT id FROM lookup_type WHERE code = 'STREAM_TYPE'),'STREAM_MAIN','Main Stream',TRUE),
+    ((SELECT id FROM lookup_type WHERE code = 'STREAM_TYPE'),'STREAM_SUB','Sub Stream',TRUE);

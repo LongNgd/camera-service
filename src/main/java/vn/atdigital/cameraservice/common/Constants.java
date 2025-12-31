@@ -30,12 +30,15 @@ public interface Constants {
     final class LOOKUP_VALUE_CODE {
         public static final String IP_VERSION_IPV4_CODE = "IPV4";
         public static final String IP_VERSION_IPV6_CODE = "IPV6";
-        public static final String VIDEO_STREAM_MAIN_CODE = "MAIN_STREAM";
-        public static final String VIDEO_STREAM_SUB_CODE = "SUB_STREAM";
+        public static final String STREAM_MAIN_CODE = "STREAM_MAIN";
+        public static final String STREAM_SUB_CODE = "STREAM_SUB";
+        public static final String TCPIP_CARD_WIRE = "CARD_WIRE";
+        public static final String TCPIP_MODE_STATIC = "MODE_STATIC";
     }
 
     final class ACTION_CODE {
-        public static final String INIT_CAMERA = "INIT_CAMERA";
+        public static final String CONFIG_CAMERA = "CONFIG_CAMERA";
+        public static final String CONNECT_CAMERA = "CONNECT_CAMERA";
     }
 
     final class PK_TYPE {

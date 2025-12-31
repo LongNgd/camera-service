@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import vn.atdigital.cameraservice.common.utils.CommonUtils;
 import vn.atdigital.cameraservice.domain.DTO.*;
+import vn.atdigital.cameraservice.domain.model.Camera;
 import vn.atdigital.cameraservice.domain.model.LookupValue;
 import vn.atdigital.cameraservice.repository.LookupValueRepository;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.*;
-import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.VIDEO_STREAM_SUB_CODE;
+import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.STREAM_SUB_CODE;
 import static vn.atdigital.cameraservice.common.utils.CommonUtils.*;
 import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
@@ -137,14 +138,19 @@ public class CameraHelper {
         checkCodeExistAllowNull(ptzSettings.getParityCode(), lookupValueMap);
     }
 
+    public void validateUpdateCameraCore(Camera camera, CameraCoreDTO cameraCoreDTO) {
+        checkValueMatch(camera.getUsername(), cameraCoreDTO.getUsername());
+        checkValueMatch(camera.getPassword(), cameraCoreDTO.getPassword());
+    }
+
     private void checkIfVideoStreamTypeDuplicate(List<VideoStreamDTO> videoStreamList, Map<String, String> lookupValueMap) {
         boolean hasMain = false;
         boolean hasSub = false;
 
         for (VideoStreamDTO videoStream : videoStreamList) {
             checkCodeExistAllowNull(videoStream.getTypeCode(), lookupValueMap);
-            if (videoStream.getTypeCode().equals(VIDEO_STREAM_MAIN_CODE) && !hasMain) hasMain = true;
-            else if (videoStream.getTypeCode().equals(VIDEO_STREAM_SUB_CODE) && !hasSub) hasSub = true;
+            if (videoStream.getTypeCode().equals(STREAM_MAIN_CODE) && !hasMain) hasMain = true;
+            else if (videoStream.getTypeCode().equals(STREAM_SUB_CODE) && !hasSub) hasSub = true;
             else throw new RuntimeException(getMessage("0001.video-stream.type.exists", lookupValueMap.get(videoStream.getTypeCode())));
         }
     }
@@ -155,11 +161,15 @@ public class CameraHelper {
 
         for (AudioStreamDTO audioStream : audioStreamList) {
             checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
-            checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
-            if (audioStream.getTypeCode().equals(VIDEO_STREAM_MAIN_CODE) && !hasMain) hasMain = true;
-            else if (audioStream.getTypeCode().equals(VIDEO_STREAM_SUB_CODE) && !hasSub) hasSub = true;
+            if (audioStream.getTypeCode().equals(STREAM_MAIN_CODE) && !hasMain) hasMain = true;
+            else if (audioStream.getTypeCode().equals(STREAM_SUB_CODE) && !hasSub) hasSub = true;
             else throw new RuntimeException(getMessage("0001.audio-stream.type.exists", lookupValueMap.get(audioStream.getTypeCode())));
         }
+    }
+
+    private void checkValueMatch(String origin, String update) {
+        if (origin.equals(update)) return;
+        else throw new RuntimeException(getMessage("0002.common.value.not-match-original", origin, update));
     }
 
     private Map<String, String> getLookUpValueMap() {
