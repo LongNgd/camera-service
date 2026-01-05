@@ -272,7 +272,7 @@ public class CameraServiceImpl implements CameraService {
     }
 
     private void configCondition(Long cameraId, ConditionDTO conditionDTO, Long auditId) {
-        Optional<CameraCondition> cameraConditionOptional = cameraConditionRepository.findByCameraIdAndStatus(cameraId, ACTIVE);
+        Optional<CameraCondition> cameraConditionOptional = cameraConditionRepository.findByCameraIdAndProfileCodeAndStatus(cameraId, conditionDTO.getProfileCode(), ACTIVE);
 
         cameraHelper.validateCondition(conditionDTO);
 

@@ -168,8 +168,9 @@ public class CameraHelper {
     }
 
     private void checkValueMatch(String origin, String update) {
-        if (origin.equals(update)) return;
-        else throw new RuntimeException(getMessage("0002.common.value.not-match-original", origin, update));
+        if (!origin.equals(update)) {
+            throw new RuntimeException(getMessage("0002.common.value.not-match-original", origin, update));
+        }
     }
 
     private Map<String, String> getLookUpValueMap() {

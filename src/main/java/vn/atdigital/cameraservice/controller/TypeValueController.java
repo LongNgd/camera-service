@@ -21,9 +21,9 @@ public class TypeValueController extends CommonController {
     private final TypeValueService typeValueService;
 
     @GetMapping("/code-map")
-    public ResponseEntity<?> getTypeCodeMap() {
+    public ResponseEntity<?> getTypeValueMap() {
         try {
-            List<TypeValueMapDTO> typeValueMapDTOList = typeValueService.getTypeCodeMap();
+            List<TypeValueMapDTO> typeValueMapDTOList = typeValueService.getTypeValueMap();
             return toSuccessResult(typeValueMapDTOList, RETURN_CODE_OK, GET_LOOKUP_INFO);
         } catch (Exception e) {
             return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);

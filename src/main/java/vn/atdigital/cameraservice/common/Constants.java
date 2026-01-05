@@ -24,6 +24,8 @@ public interface Constants {
 
     final class API_SUCCESS_MESSAGE {
         public static final String GET_LOOKUP_INFO = "Get lookup info successfully";
+        public static final String GET_ACTIVE_PROFILE = "Get active profile successfully";
+        public static final String GET_PROFILE_CONDITION = "Get profile condition successfully";
     }
 
     final class STATUS_COMMON {
@@ -43,10 +45,12 @@ public interface Constants {
     final class ACTION_CODE {
         public static final String CONFIG_CAMERA = "CONFIG_CAMERA";
         public static final String CONNECT_CAMERA = "CONNECT_CAMERA";
+        public static final String ADD_CONDITION_PROFILE = "ADD_CONDITION_PROFILE";
     }
 
     final class PK_TYPE {
         public static final String CAMERA_TYPE = "Camera";
+        public static final String CAMERA_CONDITION_TYPE = "Camera condition";
     }
 
     final class TABLE_NAME {
@@ -61,10 +65,6 @@ public interface Constants {
         public static final String CAMERA_AUDIO_TABLE = "camera_audio";
         public static final String CAMERA_AUDIO_STREAM_TABLE = "camera_audio_stream";
         public static final String CAMERA_CONDITION_TABLE = "camera_condition";
-        public static final String CAMERA_CONDITION_BASIC_TABLE = "camera_condition_basic";
-        public static final String CAMERA_CONDITION_IMAGE_TABLE = "camera_condition_image";
-        public static final String CAMERA_CONDITION_AGC_TABLE = "camera_condition_agc";
-        public static final String CAMERA_CONDITION_FFC_TABLE = "camera_condition_ffc";
         public static final String CAMERA_PATH_TABLE = "camera_path";
     }
 }
