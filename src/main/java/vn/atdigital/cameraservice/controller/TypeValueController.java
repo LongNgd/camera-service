@@ -23,7 +23,7 @@ public class TypeValueController extends CommonController {
     @GetMapping("/code-map")
     public ResponseEntity<?> getTypeValueMap() {
         try {
-            List<TypeValueMapDTO> typeValueMapDTOList = typeValueService.getTypeValueMap();
+            List<TypeValueMapDTO> typeValueMapDTOList = typeValueService.getTypeCodeMap();
             return toSuccessResult(typeValueMapDTOList, RETURN_CODE_OK, GET_LOOKUP_INFO);
         } catch (Exception e) {
             return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);

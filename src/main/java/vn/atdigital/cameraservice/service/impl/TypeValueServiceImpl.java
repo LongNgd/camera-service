@@ -19,7 +19,7 @@ public class TypeValueServiceImpl implements TypeValueService {
     private final LookupValueRepository lookupValueRepository;
 
     @Override
-    public List<TypeValueMapDTO> getTypeValueMap() {
+    public List<TypeValueMapDTO> getTypeCodeMap() {
         List<LookupType> lookupTypeList = lookupTypeRepository.findAll();
         List<LookupValue> lookupValueList = lookupValueRepository.findByIsActive(true);
 
