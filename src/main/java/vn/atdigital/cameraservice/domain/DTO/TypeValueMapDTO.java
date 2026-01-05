@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -13,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class TypeValueMapDTO {
     private String type;
-    private List<String> valueList;
+    private List<Map<String, String>> valueMapList;
 }

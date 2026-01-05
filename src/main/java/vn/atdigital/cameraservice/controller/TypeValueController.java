@@ -20,7 +20,7 @@ import static vn.atdigital.cameraservice.common.Constants.API_SUCCESS_MESSAGE.GE
 public class TypeValueController extends CommonController {
     private final TypeValueService typeValueService;
 
-    @GetMapping
+    @GetMapping("/code-map")
     public ResponseEntity<?> getTypeValueMap() {
         try {
             List<TypeValueMapDTO> typeValueMapDTOList = typeValueService.getTypeValueMap();

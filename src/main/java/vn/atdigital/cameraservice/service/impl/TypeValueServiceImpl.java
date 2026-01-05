@@ -28,9 +28,9 @@ public class TypeValueServiceImpl implements TypeValueService {
         return lookupTypeList.stream()
                 .map(lookupType -> TypeValueMapDTO.builder()
                         .type(lookupType.getName())
-                        .valueList(valueMapByTypeId.getOrDefault(lookupType.getId(), Collections.emptyList())
+                        .valueMapList(valueMapByTypeId.getOrDefault(lookupType.getId(), Collections.emptyList())
                                 .stream()
-                                .map(LookupValue::getName)
+                                .map(lookupValue -> Map.of(lookupValue.getCode(), lookupValue.getName()))
                                 .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
