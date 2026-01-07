@@ -37,13 +37,4 @@ public class CameraController extends CommonController {
         }
     }
 
-    @PostMapping("/update-tcp-ip")
-    public ResponseEntity<?> updateTcpIpCamera(@RequestParam Long cameraId, @RequestBody TcpIpRequestDTO tcpIpRequestDTO) {
-        try {
-            tcpIpConfigService.updateCamera(cameraId, tcpIpRequestDTO);
-            return toSuccessResultNull(RETURN_CODE_OK);
-        }catch (Exception e) {
-            return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);
-        }
-    }
 }
