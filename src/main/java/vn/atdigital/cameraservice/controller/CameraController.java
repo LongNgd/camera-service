@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.atdigital.cameraservice.domain.DTO.CameraConfigDTO;
 import vn.atdigital.cameraservice.domain.DTO.ConnectionDTO;
+import vn.atdigital.cameraservice.domain.DTO.TcpIpRequestDTO;
 import vn.atdigital.cameraservice.service.CameraService;
+import vn.atdigital.cameraservice.service.TcpIpConfigService;
 
 import static vn.atdigital.cameraservice.common.Constants.API_RESPONSE.*;
 
@@ -14,7 +16,7 @@ import static vn.atdigital.cameraservice.common.Constants.API_RESPONSE.*;
 @RequestMapping("/camera")
 public class CameraController extends CommonController {
     private final CameraService cameraService;
-
+    private final TcpIpConfigService tcpIpConfigService;
     @PostMapping("/connect")
     public ResponseEntity<?> connectCamera(@RequestParam Long ownerId, @RequestParam String ownerType, @RequestBody ConnectionDTO connectionDTO) {
         try {
@@ -31,6 +33,16 @@ public class CameraController extends CommonController {
             cameraService.configCamera(cameraId, config);
             return toSuccessResultNull(RETURN_CODE_OK);
         } catch (Exception e) {
+            return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/update-tcp-ip")
+    public ResponseEntity<?> updateTcpIpCamera(@RequestParam Long cameraId, @RequestBody TcpIpRequestDTO tcpIpRequestDTO) {
+        try {
+            tcpIpConfigService.updateCamera(cameraId, tcpIpRequestDTO);
+            return toSuccessResultNull(RETURN_CODE_OK);
+        }catch (Exception e) {
             return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);
         }
     }

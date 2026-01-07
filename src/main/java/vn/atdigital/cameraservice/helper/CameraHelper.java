@@ -1,20 +1,25 @@
 package vn.atdigital.cameraservice.helper;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import vn.atdigital.cameraservice.common.utils.CommonUtils;
 import vn.atdigital.cameraservice.domain.DTO.*;
-import vn.atdigital.cameraservice.domain.model.Camera;
-import vn.atdigital.cameraservice.domain.model.LookupValue;
+import vn.atdigital.cameraservice.domain.model.*;
 import vn.atdigital.cameraservice.repository.LookupValueRepository;
+import vn.atdigital.cameraservice.repository.TcpIpV4Repository;
+import vn.atdigital.cameraservice.repository.TcpIpV6Repository;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.*;
 import static vn.atdigital.cameraservice.common.Constants.LOOKUP_VALUE_CODE.STREAM_SUB_CODE;
+import static vn.atdigital.cameraservice.common.Constants.TABLE_NAME.*;
+import static vn.atdigital.cameraservice.common.Constants.TABLE_STATUS.ACTIVE;
 import static vn.atdigital.cameraservice.common.utils.CommonUtils.*;
 import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 
@@ -23,6 +28,8 @@ import static vn.atdigital.cameraservice.common.utils.MessageUtils.getMessage;
 public class CameraHelper {
     private final CommonUtils commonUtils;
     private final LookupValueRepository lookupValueRepository;
+    private final TcpIpV4Repository tcpIpV4Repository;
+    private final TcpIpV6Repository tcpIpV6Repository;
 
     public void validateCameraCore(CameraCoreDTO cameraCore) {
         Assert.notNull(cameraCore, getMessage("0001.camera.null-or-empty"));
@@ -180,5 +187,37 @@ public class CameraHelper {
         lookUpValueList.forEach(lookupValue -> lookupValueMap.put(lookupValue.getCode(), lookupValue.getName()));
 
         return lookupValueMap;
+    }
+
+    public void updateTcpIp(CameraTcpIp cameraTcpIp, TcpIpRequestDTO dto,Long auditId) {
+        String username = cameraTcpIp.getUpdatedUser();
+        Long cameraTcpId = cameraTcpIp.getId();
+
+        switch (cameraTcpIp.getIpVersionCode()) {
+            case IP_VERSION_IPV4_CODE -> tcpIpV4Repository.findByCameraTcpIdAndStatus(cameraTcpId, ACTIVE)
+                    .ifPresent(v4 -> {
+
+                        TcpIpV4 oldData = new TcpIpV4();
+                        BeanUtils.copyProperties(dto, oldData);
+
+                        v4.setSubnetMask(dto.getSubnetMask());
+                        v4.setUpdatedUser(username);
+                        v4.setUpdatedDatetime(LocalDateTime.now());
+                        tcpIpV4Repository.save(v4);
+                        commonUtils.saveActionDetail(auditId,CAMERA_TCP_IP_V4,v4.getId(),oldData,v4);
+                    });
+
+            case IP_VERSION_IPV6_CODE -> tcpIpV6Repository.findByCameraTcpIdAndStatus(cameraTcpId, ACTIVE)
+                    .ifPresent(v6 -> {
+                        TcpIpV6 oldData = new TcpIpV6();
+                        BeanUtils.copyProperties(dto, oldData);
+
+                        v6.setCidrNotation(dto.getCidrNotation());
+                        v6.setUpdatedUser(username);
+                        v6.setUpdatedDatetime(LocalDateTime.now());
+                        tcpIpV6Repository.save(v6);
+                        commonUtils.saveActionDetail(auditId,CAMERA_TCP_IP_V6,v6.getId(),oldData,v6);
+                    });
+        }
     }
 }
