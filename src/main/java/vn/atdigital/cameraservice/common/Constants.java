@@ -47,12 +47,15 @@ public interface Constants {
         public static final String CONNECT_CAMERA = "CONNECT_CAMERA";
         public static final String ADD_CONDITION_PROFILE = "ADD_CONDITION_PROFILE";
         public static final String UPDATE_CAMERA_TCP_IP = "UPDATE_TCP_IP";
+        public static final String UPDATE_CAMERA_PORT= "UPDATE_CAMERA_PORT";
+
     }
 
     final class PK_TYPE {
         public static final String CAMERA_TYPE = "Camera";
         public static final String CAMERA_CONDITION_TYPE = "Camera condition";
-        public static final String CAMERA_TCP_IP="camera_tcp_ip";
+        public static final String CAMERA_TCP_IP="Camera_tcp_ip";
+        public static final String CAMERA_PORT="Camera_port";
     }
 
     final class TABLE_NAME {

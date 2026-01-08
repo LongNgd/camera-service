@@ -193,7 +193,7 @@ public class CameraHelper {
         String username = cameraTcpIp.getUpdatedUser();
         Long cameraTcpId = cameraTcpIp.getId();
 
-        switch (cameraTcpIp.getIpVersionCode()) {
+        switch (cameraTcpIp.getIpVersionCode().toUpperCase().trim()) {
             case IP_VERSION_IPV4_CODE -> tcpIpV4Repository.findByCameraTcpIdAndStatus(cameraTcpId, ACTIVE)
                     .ifPresent(v4 -> {
 
@@ -212,6 +212,7 @@ public class CameraHelper {
                         TcpIpV6 oldData = new TcpIpV6();
                         BeanUtils.copyProperties(dto, oldData);
 
+                        v6.setLinkAddress(dto.getLinkAddress());
                         v6.setCidrNotation(dto.getCidrNotation());
                         v6.setUpdatedUser(username);
                         v6.setUpdatedDatetime(LocalDateTime.now());
@@ -219,5 +220,17 @@ public class CameraHelper {
                         commonUtils.saveActionDetail(auditId,CAMERA_TCP_IP_V6,v6.getId(),oldData,v6);
                     });
         }
+    }
+
+    public void portUpdate(CameraPort cameraPort, PortDTO portDTO) {
+
+        validatePort(portDTO);
+        cameraPort.setMaxConnection(portDTO.getMaxConnection() != null ? portDTO.getMaxConnection() : 10);
+        cameraPort.setTcpPort(portDTO.getTcpPort() != null ? portDTO.getTcpPort() : 37777);
+        cameraPort.setUdpPort(portDTO.getUdpPort() != null ? portDTO.getUdpPort() : 37778);
+        cameraPort.setHttpPort(portDTO.getHttpPort() != null ? portDTO.getHttpPort() : 80);
+        cameraPort.setRtspPort(portDTO.getRtspPort() != null ? portDTO.getRtspPort() : 554);
+        cameraPort.setHttpsPort(portDTO.getHttpsPort() != null ? portDTO.getHttpsPort() : 443);
+        cameraPort.setUpdatedDatetime(LocalDateTime.now());
     }
 }

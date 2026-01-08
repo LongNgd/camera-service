@@ -20,5 +20,6 @@ public class TcpIpRequestDTO {
     private String subnetMask;
 
     // ipV6
+    private String linkAddress;
     private String cidrNotation;
 }
