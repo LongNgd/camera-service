@@ -48,6 +48,7 @@ public interface Constants {
         public static final String ADD_CONDITION_PROFILE = "ADD_CONDITION_PROFILE";
         public static final String UPDATE_CAMERA_TCP_IP = "UPDATE_TCP_IP";
         public static final String UPDATE_CAMERA_PORT= "UPDATE_CAMERA_PORT";
+        public static final String UPDATE_CAMERA_VIDEO= "UPDATE_CAMERA_VIDEO";
 
     }
 
@@ -56,6 +57,7 @@ public interface Constants {
         public static final String CAMERA_CONDITION_TYPE = "Camera condition";
         public static final String CAMERA_TCP_IP="Camera_tcp_ip";
         public static final String CAMERA_PORT="Camera_port";
+        public static final String CAMERA_VIDEO="Camera_video";
     }
 
     final class TABLE_NAME {
@@ -71,8 +73,7 @@ public interface Constants {
         public static final String CAMERA_AUDIO_STREAM_TABLE = "camera_audio_stream";
         public static final String CAMERA_CONDITION_TABLE = "camera_condition";
         public static final String CAMERA_PATH_TABLE = "camera_path";
-        public static final String CAMERA_TCP_IP_V4= "camera_tcp_ipv4";
-        public static final String CAMERA_TCP_IP_V6= "camera_tcp_ipv6";
+        public static final String CAMERA_VIDEO_STREAM="camera_video_stream";
     }
 }
 

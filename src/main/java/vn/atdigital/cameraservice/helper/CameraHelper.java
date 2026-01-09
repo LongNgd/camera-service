@@ -46,7 +46,7 @@ public class CameraHelper {
         validateMacAddressAllowNull(tcpIp.getMacAddress());
         commonUtils.checkCodeExist(tcpIp.getIpVersionCode());
 
-        switch(tcpIp.getIpVersionCode()) {
+        switch (tcpIp.getIpVersionCode()) {
             case IP_VERSION_IPV4_CODE -> {
                 validateIpV4(tcpIp.getIpAddress());
                 validateIpV4AllowNull(tcpIp.getSubnetMask());
@@ -68,11 +68,30 @@ public class CameraHelper {
 
     public void validatePort(PortDTO port) {
         validateInRangeAllowNull(port.getMaxConnection(), 1, 20);
-        validateInRange(port.getTcpPort(), 1025, 65534);
+        validateInRangeAllowNull(port.getTcpPort(), 1025, 65534);
         validateInRangeAllowNull(port.getUdpPort(), 1025, 65534);
         validateInRangeAllowNull(port.getHttpPort(), 0, null);
-        validateInRange(port.getRtspPort(), 0, null);
+        validateInRangeAllowNull(port.getRtspPort(), 0, null);
         validateInRangeAllowNull(port.getHttpsPort(), 0, null);
+
+        if (port.getMaxConnection() == null) {
+            port.setMaxConnection(10);
+        }
+        if (port.getTcpPort() == null) {
+            port.setTcpPort(37777);
+        }
+        if (port.getUdpPort() == null) {
+            port.setUdpPort(37778);
+        }
+        if (port.getHttpPort() == null) {
+            port.setHttpPort(80);
+        }
+        if (port.getRtspPort() == null) {
+            port.setRtspPort(554);
+        }
+        if (port.getHttpsPort() == null) {
+            port.setHttpsPort(443);
+        }
     }
 
     public void validateCondition(ConditionDTO condition) {
@@ -113,7 +132,7 @@ public class CameraHelper {
             checkCodeExistAllowNull(videoStream.getResolutionCode(), lookupValueMap);
             checkCodeExistAllowNull(videoStream.getFrameRateCode(), lookupValueMap);
             checkCodeExistAllowNull(videoStream.getBitRateTypeCode(), lookupValueMap);
-            checkCodeExistAllowNull(videoStream.getReferenceBitRateCode(), lookupValueMap);
+            // checkCodeExistAllowNull(videoStream.getReferenceBitRateCode(), lookupValueMap); //TODO Add value to db
             checkCodeExistAllowNull(videoStream.getBitRateCode(), lookupValueMap);
             checkCodeExistAllowNull(videoStream.getSvcCode(), lookupValueMap);
         }
@@ -158,7 +177,8 @@ public class CameraHelper {
             checkCodeExistAllowNull(videoStream.getTypeCode(), lookupValueMap);
             if (videoStream.getTypeCode().equals(STREAM_MAIN_CODE) && !hasMain) hasMain = true;
             else if (videoStream.getTypeCode().equals(STREAM_SUB_CODE) && !hasSub) hasSub = true;
-            else throw new RuntimeException(getMessage("0001.video-stream.type.exists", lookupValueMap.get(videoStream.getTypeCode())));
+            else
+                throw new RuntimeException(getMessage("0001.video-stream.type.exists", lookupValueMap.get(videoStream.getTypeCode())));
         }
     }
 
@@ -170,7 +190,8 @@ public class CameraHelper {
             checkCodeExistAllowNull(audioStream.getTypeCode(), lookupValueMap);
             if (audioStream.getTypeCode().equals(STREAM_MAIN_CODE) && !hasMain) hasMain = true;
             else if (audioStream.getTypeCode().equals(STREAM_SUB_CODE) && !hasSub) hasSub = true;
-            else throw new RuntimeException(getMessage("0001.audio-stream.type.exists", lookupValueMap.get(audioStream.getTypeCode())));
+            else
+                throw new RuntimeException(getMessage("0001.audio-stream.type.exists", lookupValueMap.get(audioStream.getTypeCode())));
         }
     }
 
@@ -189,7 +210,7 @@ public class CameraHelper {
         return lookupValueMap;
     }
 
-    public void updateTcpIp(CameraTcpIp cameraTcpIp, TcpIpRequestDTO dto,Long auditId) {
+    public void updateTcpIp(CameraTcpIp cameraTcpIp, TcpIpRequestDTO dto, Long auditId) {
         String username = cameraTcpIp.getUpdatedUser();
         Long cameraTcpId = cameraTcpIp.getId();
 
@@ -204,7 +225,7 @@ public class CameraHelper {
                         v4.setUpdatedUser(username);
                         v4.setUpdatedDatetime(LocalDateTime.now());
                         tcpIpV4Repository.save(v4);
-                        commonUtils.saveActionDetail(auditId,CAMERA_TCP_IP_V4,v4.getId(),oldData,v4);
+                        commonUtils.saveActionDetail(auditId, TCP_IP_V4_TABLE, v4.getId(), oldData, v4);
                     });
 
             case IP_VERSION_IPV6_CODE -> tcpIpV6Repository.findByCameraTcpIdAndStatus(cameraTcpId, ACTIVE)
@@ -217,7 +238,7 @@ public class CameraHelper {
                         v6.setUpdatedUser(username);
                         v6.setUpdatedDatetime(LocalDateTime.now());
                         tcpIpV6Repository.save(v6);
-                        commonUtils.saveActionDetail(auditId,CAMERA_TCP_IP_V6,v6.getId(),oldData,v6);
+                        commonUtils.saveActionDetail(auditId, TCP_IP_V6_TABLE, v6.getId(), oldData, v6);
                     });
         }
     }
@@ -225,12 +246,12 @@ public class CameraHelper {
     public void portUpdate(CameraPort cameraPort, PortDTO portDTO) {
 
         validatePort(portDTO);
-        cameraPort.setMaxConnection(portDTO.getMaxConnection() != null ? portDTO.getMaxConnection() : 10);
-        cameraPort.setTcpPort(portDTO.getTcpPort() != null ? portDTO.getTcpPort() : 37777);
-        cameraPort.setUdpPort(portDTO.getUdpPort() != null ? portDTO.getUdpPort() : 37778);
-        cameraPort.setHttpPort(portDTO.getHttpPort() != null ? portDTO.getHttpPort() : 80);
-        cameraPort.setRtspPort(portDTO.getRtspPort() != null ? portDTO.getRtspPort() : 554);
-        cameraPort.setHttpsPort(portDTO.getHttpsPort() != null ? portDTO.getHttpsPort() : 443);
+        cameraPort.setMaxConnection(portDTO.getMaxConnection());
+        cameraPort.setTcpPort(portDTO.getTcpPort());
+        cameraPort.setUdpPort(portDTO.getUdpPort());
+        cameraPort.setHttpPort(portDTO.getHttpPort());
+        cameraPort.setRtspPort(portDTO.getRtspPort());
+        cameraPort.setHttpsPort(portDTO.getHttpsPort());
         cameraPort.setUpdatedDatetime(LocalDateTime.now());
     }
 }

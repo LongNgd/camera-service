@@ -1,5 +1,6 @@
 package vn.atdigital.cameraservice.domain.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class VideoStreamDTO {
     private String bitRateTypeCode;
     private String referenceBitRateCode;
     private String bitRateCode;
+    @JsonProperty("iFrameInterval")
     private Integer iFrameInterval;
     private String svcCode;
     // Main

@@ -128,7 +128,7 @@ public class CameraServiceImpl implements CameraService {
         commonUtils.saveActionDetail(auditId, CAMERA_PATH_TABLE, cameraPath.getId(), null, cameraPath);
     }
 
-    private void createTcpIp(Long cameraId, String ipAddress, Long auditId) {
+    private void  createTcpIp(Long cameraId, String ipAddress, Long auditId) {
         validateIpV4(ipAddress);
 
         CameraTcpIp tcpIp = CameraTcpIp.builder()
