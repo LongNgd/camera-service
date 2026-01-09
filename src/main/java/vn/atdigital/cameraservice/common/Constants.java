@@ -49,6 +49,8 @@ public interface Constants {
         public static final String UPDATE_CAMERA_TCP_IP = "UPDATE_TCP_IP";
         public static final String UPDATE_CAMERA_PORT= "UPDATE_CAMERA_PORT";
         public static final String UPDATE_CAMERA_VIDEO= "UPDATE_CAMERA_VIDEO";
+        public static final String UPDATE_CAMERA_PTZ_SETTING = "UPDATE_CAMERA_PTZ_SETTING";
+        public static final String UPDATE_CAMERA_AUDIO= "UPDATE_CAMERA_AUDIO";
 
     }
 
@@ -58,6 +60,8 @@ public interface Constants {
         public static final String CAMERA_TCP_IP="Camera_tcp_ip";
         public static final String CAMERA_PORT="Camera_port";
         public static final String CAMERA_VIDEO="Camera_video";
+        public static final String CAMERA_PTZ_SETTING="Camera_ptz_setting";
+        public static final String CAMERA_AUDIO="Camera_audio";
     }
 
     final class TABLE_NAME {

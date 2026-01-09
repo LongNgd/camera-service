@@ -5,10 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.atdigital.cameraservice.domain.DTO.*;
 import vn.atdigital.cameraservice.domain.model.CameraCondition;
-import vn.atdigital.cameraservice.service.CameraService;
-import vn.atdigital.cameraservice.service.ConditionService;
-import vn.atdigital.cameraservice.service.TcpIpConfigService;
-import vn.atdigital.cameraservice.service.VideoService;
+import vn.atdigital.cameraservice.service.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +21,7 @@ public class CameraController extends CommonController {
     private final CameraService cameraService;
     private final VideoService videoService;
     private final ConditionService conditionService;
+    private final AudioService audioService;
 
     @PostMapping("/connect")
     public ResponseEntity<?> connectCamera(@RequestParam Long ownerId, @RequestParam String ownerType, @RequestBody ConnectionDTO connectionDTO) {
@@ -46,7 +44,7 @@ public class CameraController extends CommonController {
     }
 
     @PostMapping("/video/update")
-    public ResponseEntity<?> updateCamera(@RequestParam Long cameraId, @RequestBody List<VideoStreamDTO> videoStreamDTO) {
+    public ResponseEntity<?> updateVideoCamera(@RequestParam Long cameraId, @RequestBody List<VideoStreamDTO> videoStreamDTO) {
         try {
             videoService.updateCameraVideo(cameraId, videoStreamDTO);
             return toSuccessResultNull(RETURN_CODE_OK);
@@ -56,6 +54,15 @@ public class CameraController extends CommonController {
 
     }
 
+    @PostMapping("/audio/update")
+    public ResponseEntity<?> updateAudioVideo(@RequestParam Long cameraId, @RequestBody AudioDTO audioDTO) {
+        try {
+            audioService.updateCameraAudio(cameraId, audioDTO);
+            return toSuccessResultNull(RETURN_CODE_OK);
+        } catch (Exception e) {
+            return toExceptionResult(e.getMessage(), RETURN_CODE_BAD_REQUEST);
+        }
+    }
     @PostMapping("/condition/add-profile")
     public ResponseEntity<?> addProfile(@RequestParam Long cameraId, @RequestParam String profileCode, @RequestBody ConditionDTO conditionDTO) throws RuntimeException {
         try {
